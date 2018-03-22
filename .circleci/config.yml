@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:9.8.0
+
+    working_directory: ~/anion
+    steps:
+      - checkout
+      - setup_remote_docker
+
+      - run:
+          name: Setup environmemnt
+          command: make ci_setup
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Yarn Install
+          command: make install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Run ci
+          command: make ci

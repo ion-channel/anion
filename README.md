@@ -1,5 +1,4 @@
 # Anion
-[![Build Status](https://travis-ci.org/ion-channel/anion.svg?branch=master)](https://travis-ci.org/ion-channel/anion)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ion-channel/anion/blob/master/LICENSE.md)
 [![Release](https://img.shields.io/github/release/ion-channel/anion.svg)](https://github.com/ion-channel/anion/releases/latest)
 
