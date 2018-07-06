@@ -10,21 +10,24 @@
 	"author": "Ion Channel Dev <dev@ionchannel.io>",
 	"license": "Apache-2.0",
 	"dependencies": {
+		"axios": "^0.18.0",
+		"prop-types": "^15.6.0",
+		"tcomb": "^3.2.27"
+	},
+	"devDependencies": {
 		"babel-cli": "^6.26.0",
 		"babel-core": "^6.26.0",
 		"babel-eslint": "^8.2.2",
 		"babel-preset-env": "^1.6.1",
-		"eslint": "^4.18.1",
-		"polished": "^1.9.2",
-		"prop-types": "^15.6.0"
-	},
-	"devDependencies": {
 		"chai": "^4.1.2",
+		"eslint": "^4.18.1",
 		"eslint-plugin-import": "^2.9.0",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
 		"eslint-plugin-mocha": "^4.12.1",
 		"eslint-plugin-react": "^7.7.0",
 		"eslint-watch": "^3.1.3",
-		"mocha": "^5.0.4"
+		"mocha": "^5.0.4",
+		"nock": "^9.4.1",
+		"polished": "^1.9.2"
 	}
 }
