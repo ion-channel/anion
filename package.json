@@ -5,7 +5,8 @@
 	"main": "build/index.js",
 	"scripts": {
 		"build": "babel --preset env lib -d build",
-		"lint:watch": "esw -w lib/**"
+		"lint:watch": "esw -w lib/**",
+		"test": "mocha --require babel-core/register './lib/**/*.test.js'"
 	},
 	"author": "Ion Channel Dev <dev@ionchannel.io>",
 	"license": "Apache-2.0",
