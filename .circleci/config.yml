@@ -1,31 +1,71 @@
 version: 2
 jobs:
-  build:
+  setup:
     docker:
-      - image: circleci/node:9.8.0
-
+      - image: circleci/node:8.12.0
     working_directory: ~/anion
     steps:
       - checkout
-      - setup_remote_docker
-
       - run:
           name: Setup environmemnt
           command: make ci_setup
 
+  install:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/anion
+    steps:
+      - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
-
       - run:
           name: Yarn Install
           command: make install
-
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
       - run:
           name: Run ci
           command: make ci
+
+  lint:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/anion
+    steps:
+      - checkout
+      - run:
+          name: Linting
+          command: make linters
+
+  test:
+    docker:
+      - image: circleci/node:8.12.0
+    working_directory: ~/anion
+    steps:
+      - checkout
+      - run:
+          name: Tests
+          command: make test
+
+
+workflows:
+  version: 2
+  build_test:
+    jobs:
+      - setup
+      - install:
+          requires:
+            - setup
+      - lint:
+          requires:
+            - install
+      - test:
+          requires:
+            - install
+      - deploy:
+          requires:
+            - lint
+            - test
