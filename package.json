@@ -3,6 +3,9 @@
 	"version": "0.0.1",
 	"description": "A Node SDK for the Ion Channel API",
 	"main": "build/index.js",
+	"engines": {
+		"node": "8.12.0"
+	},
 	"scripts": {
 		"build": "babel --preset env lib -d build",
 		"lint:watch": "esw -w lib/**",
