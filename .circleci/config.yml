@@ -61,7 +61,3 @@ workflows:
       - test:
           requires:
             - install
-      - deploy:
-          requires:
-            - lint
-            - test
