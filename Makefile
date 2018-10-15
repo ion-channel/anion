@@ -33,6 +33,10 @@ deploy: ## Deploy the projects
 		echo "Deploy disabled for now"; \
 	fi
 
+.PHONY: ecr_login
+ecr_login:  ## Login to the ECR using local credentials
+	@eval $$(aws ecr get-login --region us-east-1 --no-include-email)
+
 .PHONY: help
 help:  ## Show This Help
 	@for line in $$(cat Makefile | grep "##" | grep -v "grep" | sed  "s/:.*##/:/g" | sed "s/\ /!/g"); do verb=$$(echo $$line | cut -d ":" -f 1); desc=$$(echo $$line | cut -d ":" -f 2 | sed "s/!/\ /g"); printf "%-30s--%s\n" "$$verb" "$$desc"; done
@@ -52,7 +56,7 @@ run: tag_image ## Run a dockerized version of the app
 	@timeout=120; while [[ "$$(docker ps -a --format '{{.Names}} {{.Status}}' | grep -v \(healthy\) | grep -v Exited | grep -v api | grep -v ion-ui | grep -v elasticmq)" && $$timeout -gt 0 ]]; do echo -n "."; sleep 1; let $$(( timeout-- )); done; if [[ $$timeout == 0 ]]; then echo "reached timeout"; exit 1; fi
 
 .PHONY: tag_image
-tag_image: ## Builds the image and tags it
+tag_image: ecr_login ## Builds the image and tags it
 	docker pull $(DOCKER_REPO)/animal:release
 	docker tag $(DOCKER_REPO)/animal:release ionchannel/animal
 	docker pull $(DOCKER_REPO)/bunsen:release
