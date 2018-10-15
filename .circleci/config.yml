@@ -47,6 +47,9 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
       - run:
+          name: Run services
+          command: make run
+      - run:
           name: Tests
           command: make test
 

@@ -3,6 +3,13 @@ SHELL = bash
 NO_COLOR := \033[0m
 INFO_COLOR := \033[0;36m
 
+APP := $(shell basename $(PWD) | tr '[:upper:]' '[:lower:]')
+DATE := $(shell date -u +%Y-%m-%d%Z%H:%M:%S)
+
+DOCKER_REPO ?= 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel
+DOCKER_IMAGE_NAME ?= $(APP)
+DOCKER_IMAGE_LABEL ?= latest
+
 CI_BRANCH ?= $(CIRCLE_BRANCH)
 
 .PHONY: ci
@@ -13,7 +20,11 @@ ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
 
 .PHONY: clean
-clean:  ## Cleanup all running and generated items
+clean: clean_files  ## Cleanup all running and generated items
+	@docker-compose down
+
+.PHONY: clean_files
+clean_files: ## Clean up the generated files
 	-@rm -rf build
 
 .PHONY: deploy
@@ -33,6 +44,31 @@ install: ## Install dependencies
 .PHONY: linters
 linters: ## Run all linters
 	yarn run eslint lib/**
+
+.PHONY: run
+run: tag_image ## Run a dockerized version of the app
+	docker-compose up -d
+	@if [[ -n "$$(docker ps -a --format '{{.Names}} {{.Status}}' | grep Exited | grep -v 'Exited (0)')" ]]; then echo "One of the containers exited poorly"; exit 1; fi
+	@timeout=120; while [[ "$$(docker ps -a --format '{{.Names}} {{.Status}}' | grep -v \(healthy\) | grep -v Exited | grep -v api | grep -v ion-ui | grep -v elasticmq)" && $$timeout -gt 0 ]]; do echo -n "."; sleep 1; let $$(( timeout-- )); done; if [[ $$timeout == 0 ]]; then echo "reached timeout"; exit 1; fi
+
+.PHONY: tag_image
+tag_image: ## Builds the image and tags it
+	docker pull $(DOCKER_REPO)/animal:release
+	docker tag $(DOCKER_REPO)/animal:release ionchannel/animal
+	docker pull $(DOCKER_REPO)/bunsen:release
+	docker tag $(DOCKER_REPO)/bunsen:release ionchannel/bunsen
+	docker pull $(DOCKER_REPO)/janice:release
+	docker tag $(DOCKER_REPO)/janice:release ionchannel/janice
+	docker pull $(DOCKER_REPO)/kermit:release
+	docker tag $(DOCKER_REPO)/kermit:release ionchannel/kermit
+	docker pull $(DOCKER_REPO)/statler:release
+	docker tag $(DOCKER_REPO)/statler:release ionchannel/statler
+	docker pull $(DOCKER_REPO)/waldorf:release
+	docker tag $(DOCKER_REPO)/waldorf:release ionchannel/waldorf
+	docker pull $(DOCKER_REPO)/yolanda:release
+	docker tag $(DOCKER_REPO)/yolanda:release ionchannel/yolanda
+	docker pull $(DOCKER_REPO)/sweetums
+	docker tag $(DOCKER_REPO)/sweetums ionchannel/sweetums
 
 .PHONY: test
 test: unit_test  ## Run all tests available

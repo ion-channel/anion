@@ -1,0 +1,179 @@
+version: '2.3'
+
+services:
+# Start API Proxy
+  api:
+    image: gomicro/avenues
+    ports:
+      - 4567:4567
+    volumes:
+      - ./ext/services/routes.yaml:/routes.yaml
+    networks:
+      - exposed_network
+      - services_network
+
+# Start DB
+  postgres:
+    image: ionchannel/testdb:latest
+    ports:
+      - 5432
+    networks:
+      - database_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 30s
+      retries: 10
+      start_period: 30s
+
+# Start Janice
+  janice:
+    image: ionchannel/janice
+    env_file: ./ext/services/janice_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      waldorf:
+        condition: service_started
+
+# Start Sweetums
+  sweetums:
+    image: ionchannel/sweetums
+    ports:
+      - 4000:4000
+    networks:
+      - services_network
+    healthcheck:
+      test: ["CMD", "/probe", "-kv", "http://localhost:4000/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+
+# Start Waldorf
+  waldorf:
+    image: ionchannel/waldorf
+    env_file: ./ext/services/waldorf_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+# Start Yolanda
+  yolanda:
+    image: ionchannel/yolanda
+    env_file: ./ext/services/yolanda_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+# Start Animal
+  animal:
+    image: ionchannel/animal
+    env_file: ./ext/services/animal_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+# Start Kermit
+  kermit:
+    image: ionchannel/kermit
+    env_file: ./ext/services/kermit_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elasticmq:
+        condition: service_started
+
+
+# Start Statler
+  statler:
+    image: ionchannel/statler
+    env_file: ./ext/services/statler_env.test
+    networks:
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 5s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      animal:
+        condition: service_healthy
+      janice:
+        condition: service_healthy
+      waldorf:
+        condition: service_healthy
+      yolanda:
+        condition: service_healthy
+
+# Start Bunsen
+  bunsen:
+    image: ionchannel/bunsen
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+    env_file: ./ext/services/bunsen_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      interval: 8s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+  elasticmq:
+    image: expert360/elasticmq
+    networks:
+      - services_network
+    volumes:
+      - ./ext/services/elasticmq.conf:/elasticmq/custom.conf
+
+networks:
+  exposed_network:
+    internal: false
+  services_network:
+    internal: false
+  database_network:
+    internal: false
