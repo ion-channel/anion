@@ -42,6 +42,7 @@ jobs:
     working_directory: ~/anion
     steps:
       - checkout
+      - setup_remote_docker
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
