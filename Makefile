@@ -27,11 +27,11 @@ ci_setup: ## Setup the ci environment
 .PHONY: clean
 clean: clean_files  ## Cleanup all running and generated items
 	@docker-compose down
-	@docker rm $(APP)_source
 
 .PHONY: clean_files
 clean_files: ## Clean up the generated files
 	-@rm -rf build
+	@docker rm $(APP)_source
 
 .PHONY: deploy
 deploy: ## Deploy the projects
@@ -62,12 +62,15 @@ logs:  ## Capture logs for services
 	@for server in $$(docker ps -a --format '{{.Names}}'); do docker logs "$$server" > "serverLogs/$$server.txt"; done
 
 .PHONY: run
-run: tag_image ## Run a dockerized version of the app
-	docker create -v /usr/app --name $(APP)_source $(DOCKER_REPO)/$(NODE_IMAGE)
-	docker cp . $(APP)_source:/usr/app
+run: tag_image source ## Run a dockerized version of the app
 	docker-compose up -d
 	@if [[ -n "$$(docker ps -a --format '{{.Names}} {{.Status}}' | grep Exited | grep -v 'Exited (0)')" ]]; then echo "One of the containers exited poorly"; exit 1; fi
 	@timeout=120; while [[ "$$(docker ps -a --format '{{.Names}} {{.Status}}' | grep -v \(healthy\) | grep -v Exited | grep -v api | grep -v source | grep -v elasticmq)" && $$timeout -gt 0 ]]; do echo -n "."; sleep 1; let $$(( timeout-- )); done; if [[ $$timeout == 0 ]]; then echo "reached timeout"; exit 1; fi
+
+.PHONY: source
+source: ## Places the source code into a container for testing
+	docker create -v /usr/app --name $(APP)_source $(DOCKER_REPO)/$(NODE_IMAGE)
+	docker cp . $(APP)_source:/usr/app
 
 .PHONY: tag_image
 tag_image: ecr_login ## Builds the image and tags it
