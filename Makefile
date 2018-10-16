@@ -14,9 +14,6 @@ NODE_IMAGE ?= node
 
 CI_BRANCH ?= $(CIRCLE_BRANCH)
 
-.PHONY: ci
-ci: linters test ## Run ci
-
 .PHONY: ci_setup
 ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
