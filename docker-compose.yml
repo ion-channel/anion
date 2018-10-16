@@ -3,11 +3,11 @@ version: '2.3'
 services:
 # Start API Proxy
   api:
-    image: gomicro/avenues
+    image: avenues
+    build:
+      context: ./ext/services
     ports:
       - 4567:4567
-    volumes:
-      - ./ext/services/routes.yaml:/routes.yaml
     networks:
       - exposed_network
       - services_network
@@ -164,11 +164,9 @@ services:
       postgres:
         condition: service_healthy
   elasticmq:
-    image: expert360/elasticmq
+    image: ionchannel/elasticmq
     networks:
       - services_network
-    volumes:
-      - ./ext/services/elasticmq.conf:/elasticmq/custom.conf
 
 networks:
   exposed_network:

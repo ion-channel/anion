@@ -56,6 +56,12 @@ install: ## Install dependencies
 linters: ## Run all linters
 	yarn run eslint lib/**
 
+.PHONY: logs
+logs:  ## Capture logs for services
+	@mkdir serverLogs
+	@docker ps -a > "serverLogs/docker.txt"
+	@for server in $$(docker ps -a --format '{{.Names}}'); do docker logs "$$server" > "serverLogs/$$server.txt"; done
+
 .PHONY: run
 run: tag_image ## Run a dockerized version of the app
 	docker-compose up -d
@@ -80,6 +86,9 @@ tag_image: ecr_login ## Builds the image and tags it
 	docker tag $(DOCKER_REPO)/yolanda:release ionchannel/yolanda
 	docker pull $(DOCKER_REPO)/sweetums
 	docker tag $(DOCKER_REPO)/sweetums ionchannel/sweetums
+	docker pull $(DOCKER_REPO)/elasticmq
+	docker tag $(DOCKER_REPO)/elasticmq ionchannel/elasticmq
+	docker build -t ionchannel/testdb ./ext/db
 
 .PHONY: test
 test: unit_test  ## Run all tests available
