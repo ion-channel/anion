@@ -1,4 +1,5 @@
 SHELL = bash
+export PATH := $(HOME)/.local/bin:$(PATH)
 
 NO_COLOR := \033[0m
 INFO_COLOR := \033[0;36m
@@ -18,6 +19,12 @@ ci: linters test ## Run ci
 .PHONY: ci_setup
 ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
+	@echo "Installing AWS cli"
+	@sudo apt-get -y -qq update
+	@sudo apt-get -y -qq install python3.4-dev
+	@curl -O https://bootstrap.pypa.io/get-pip.py
+	@python3.4 get-pip.py --user
+	@pip install --user awscli
 
 .PHONY: clean
 clean: clean_files  ## Cleanup all running and generated items
