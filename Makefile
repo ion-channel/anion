@@ -91,7 +91,7 @@ tag_image: ecr_login ## Builds the image and tags it
 	docker build -t ionchannel/testdb ./ext/db
 
 .PHONY: test
-test: unit_test  ## Run all tests available
+test: unit_test integration_test ## Run all tests available
 
 .PHONY: unit_test
 unit_test:  ## Run unit tests
@@ -99,4 +99,4 @@ unit_test:  ## Run unit tests
 
 .PHONY: integration_test
 integration_test:  ## Run integration tests
-	yarn run mocha --timeout "lib/**/*.integration.test.js"
+	yarn run mocha --require babel-core/register "lib/**/*.test.int.js"
