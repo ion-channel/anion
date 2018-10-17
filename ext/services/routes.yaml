@@ -1,0 +1,29 @@
+---
+services:
+  animal: http://animal:4567
+  bunsen: http://bunsen:4567
+  janice: http://janice:4567
+  kermit: http://kermit:4567
+  rosita: http://rosita:4567
+  statler: http://statler:4567
+  waldorf: http://waldorf:4567
+  yolanda: http://yolanda:4567
+routes:
+  /v1/accountUsers: janice
+  /v1/accounts: janice
+  /v1/airgap: kermit
+  /v1/animal: animal
+  /v1/auth: janice
+  /v1/dev/createInviteToken: janice
+  /v1/product: bunsen
+  /v1/project: yolanda
+  /v1/report: statler
+  /v1/ruleset: waldorf
+  /v1/scanner: kermit
+  /v1/search: rosita
+  /v1/sessions: janice
+  /v1/teamUsers: janice
+  /v1/teams: janice
+  /v1/tokens: janice
+  /v1/users: janice
+  /v1/vulnerability: bunsen
