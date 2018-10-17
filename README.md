@@ -1,5 +1,5 @@
 # Anion
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ion-channel/anion/blob/master/LICENSE.md)
+[![Ion Channel Status](https://api.ionchannel.io/v1/report/getBadge?project_id=71947498-72d7-4c82-9517-ac3b2bdf7859&branch=master)](http://console.ionchannel.io/)[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ion-channel/anion/blob/master/LICENSE.md)
 [![Release](https://img.shields.io/github/release/ion-channel/anion.svg)](https://github.com/ion-channel/anion/releases/latest)
 
 A Node SDK for the Ion Channel API
