@@ -3,7 +3,7 @@
 	"description": "A Node SDK for the Ion Channel API",
 	"main": "anion.js",
 	"engines": {
-		"node": "10.12.0"
+		"node": ">=10.12.0"
 	},
 	"scripts": {
 		"build": "babel --preset env lib -d build",
