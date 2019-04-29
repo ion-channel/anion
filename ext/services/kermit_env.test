@@ -11,6 +11,7 @@ KERMIT_YOLANDA_URL=http://yolanda:4567/
 
 KERMIT_EVENTS_URL=https://api.test.ionchannel.io
 
+KERMIT_APIBASEURL=http://api:4567/
 KERMIT_SERVICES_URL=http://kermit/v1
 KERMIT_SERVICES_USERNAME=cooldude
 KERMIT_SERVICES_PASSWORD=supersecret
