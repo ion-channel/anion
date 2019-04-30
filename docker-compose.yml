@@ -94,10 +94,12 @@ services:
     image: ionchannel/animal
     env_file: ./ext/services/animal_env.test
     networks:
-      - database_network
-      - services_network
+      database_network: {}
+      services_network:
+        aliases:
+          - animal.ionchannel.testing
     healthcheck:
-      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      test: ["CMD", "/probe", "-kv", "https://localhost:4567/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5

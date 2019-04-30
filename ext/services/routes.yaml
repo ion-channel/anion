@@ -1,29 +1,88 @@
 ---
-services:
-  animal: http://animal:4567
-  bunsen: http://bunsen:4567
-  janice: http://janice:4567
-  kermit: http://kermit:4567
-  rosita: http://rosita:4567
-  statler: http://statler:4567
-  waldorf: http://waldorf:4567
-  yolanda: http://yolanda:4567
 routes:
-  /v1/accountUsers: janice
-  /v1/accounts: janice
-  /v1/airgap: kermit
-  /v1/animal: animal
-  /v1/auth: janice
-  /v1/dev/createInviteToken: janice
-  /v1/product: bunsen
-  /v1/project: yolanda
-  /v1/report: statler
-  /v1/ruleset: waldorf
-  /v1/scanner: kermit
-  /v1/search: rosita
-  /v1/sessions: janice
-  /v1/teamUsers: janice
-  /v1/teams: janice
-  /v1/tokens: janice
-  /v1/users: janice
-  /v1/vulnerability: bunsen
+  /v1/animal:
+    backend: "https://animal.ionchannel.testing:4567"
+  /v1/product:
+    backend: "http://bunsen:4567"
+  /v1/vulnerability:
+    backend: "http://bunsen:4567"
+  /v1/accountUsers:
+    backend: "http://janice:4567"
+  /v1/accounts:
+    backend: "http://janice:4567"
+  /v1/auth:
+    backend: "http://janice:4567"
+  /v1/dev/createInviteToken:
+    backend: "http://janice:4567"
+  /v1/sessions:
+    backend: "http://janice:4567"
+  /v1/teamUsers:
+    backend: "http://janice:4567"
+  /v1/teams:
+    backend: "http://janice:4567"
+  /v1/tokens:
+    backend: "http://janice:4567"
+  /v1/users:
+    backend: "http://janice:4567"
+  /v1/airgap:
+    backend: "http://kermit:4567"
+  /v1/scanner:
+    backend: "http://kermit:4567"
+  /v1/search:
+    backend: "http://rosita:4567"
+  /v1/report:
+    backend: "http://statler:4567"
+  /v1/ruleset:
+    backend: "http://waldorf:4567"
+  /v1/project:
+    backend: "http://yolanda:4567"
+ca: |
+  -----BEGIN CERTIFICATE-----
+  MIIELTCCAxWgAwIBAgIJAOaMvdsWGBh6MA0GCSqGSIb3DQEBCwUAMIGsMQswCQYD
+  VQQGEwJVUzELMAkGA1UECAwCVkExGDAWBgNVBAcMD0lvbkNoYW5uZWwgQ2l0eTEU
+  MBIGA1UECgwLSW9uIENoYW5uZWwxGTAXBgNVBAsMEElvbiBDaGFubmVsIFByb2Qx
+  ITAfBgNVBAMMGFByb2QgSW9uIENoYW5uZWwgUm9vdCBDQTEiMCAGCSqGSIb3DQEJ
+  ARYTYWRtaW5AaW9uY2hhbm5lbC5pbzAeFw0xNjEyMDUxNzI4NDZaFw0xOTA5MjUx
+  NzI4NDZaMIGsMQswCQYDVQQGEwJVUzELMAkGA1UECAwCVkExGDAWBgNVBAcMD0lv
+  bkNoYW5uZWwgQ2l0eTEUMBIGA1UECgwLSW9uIENoYW5uZWwxGTAXBgNVBAsMEElv
+  biBDaGFubmVsIFByb2QxITAfBgNVBAMMGFByb2QgSW9uIENoYW5uZWwgUm9vdCBD
+  QTEiMCAGCSqGSIb3DQEJARYTYWRtaW5AaW9uY2hhbm5lbC5pbzCCASIwDQYJKoZI
+  hvcNAQEBBQADggEPADCCAQoCggEBAKNG2jOtYuvViQ5Rlttq4vQorm+Lk2zvljMV
+  +1lb9F5rPuEn3gWUcAQVAG97e4DJyxLfKyPmCJ9ucYe2fqPk4e0hbtx70DBg5d8Z
+  PBSp4qiPfy+VATCuNb+r66rr2OjTR+zRs1pfjCdVW+YrCL8o8mjAFoG9vhFZ+zk9
+  wmG7cHuxJeuW144yLPqu4kILu7KEt1YXEl4tLVfJnuSQ5f8MB6IpyNbNTzwPzQ6Z
+  I+bWp5ftM9sxt9KJI4D0qMrPrV/5yajYuh9pmzjHpcIsW+Lc3omdX8eNpdpdTNIG
+  fpf6OpD3G0LBvpWP9R5Uw/AZbo4PlqyyV6dE8X0N657bjw9rT4ECAwEAAaNQME4w
+  HQYDVR0OBBYEFMNx0ffMDldS3GAtcpXecjfy+A1bMB8GA1UdIwQYMBaAFMNx0ffM
+  DldS3GAtcpXecjfy+A1bMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEB
+  AFVrrirAPlcnSpRL/76I7jqaYe/d6srtdzxsE1gG0AtgW+uqJGzDXKPTJaXWH91+
+  KOYS0g2NgHzP2ZJ6ZwxALE3zD6nV1zX5zvYJywc66day3kMB0qu+zPUe4DvhxBfB
+  tPWibz2ziqaLoohdqDIh78nIHa//2ZJiT1/YrYaRtfeivH8Vs560hmVbKFvbGSuI
+  Ihr5nwmyagQlwgJAFN0s2tPapwuLLQ6NT5ClCuZFvldIf/t6FLlOWSlCyANiQ9/A
+  GqHUk6MCarmDHvvpvw2dj7u5J9rwnC9dsIDq3NnTnicpEIF7914PZsDI7pLvChZ0
+  yFMlnlZPTgVqyPbDf4qcYM4=
+  -----END CERTIFICATE-----
+  -----BEGIN CERTIFICATE-----
+  MIIEGzCCAwOgAwIBAgIJAKo+EWOuYAoYMA0GCSqGSIb3DQEBCwUAMIGjMQswCQYD
+  VQQGEwJVUzELMAkGA1UECAwCVkExFzAVBgNVBAcMDklvbkNoYW5uZWxDaXR5MRMw
+  EQYDVQQKDApJb25DaGFubmVsMRwwGgYDVQQLDBNJb24gQ2hhbm5lbCBUZXN0aW5n
+  MRcwFQYDVQQDDA5Jb24gQ2hhbm5lbCBDQTEiMCAGCSqGSIb3DQEJARYTYWRtaW5A
+  aW9uY2hhbm5lbC5pbzAeFw0xNjExMTUxNzExMTBaFw0xOTA5MDUxNzExMTBaMIGj
+  MQswCQYDVQQGEwJVUzELMAkGA1UECAwCVkExFzAVBgNVBAcMDklvbkNoYW5uZWxD
+  aXR5MRMwEQYDVQQKDApJb25DaGFubmVsMRwwGgYDVQQLDBNJb24gQ2hhbm5lbCBU
+  ZXN0aW5nMRcwFQYDVQQDDA5Jb24gQ2hhbm5lbCBDQTEiMCAGCSqGSIb3DQEJARYT
+  YWRtaW5AaW9uY2hhbm5lbC5pbzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC
+  ggEBALWTYmAknGj6kLnGPuxW8GIYEmGeRmCUVOxcmGMynHaRuvVE8bhSCPB1b0d7
+  kwRyKz6NLPf7/eUs4y5f+nm/VMrrhxHf0O64GSppMsQG2Xra06ExlvIpuFcYS9XV
+  +HO6nvHORM/OYf5PmIwJ9eOMLcYPGP/op6lkalcFqpmPgGxEF3f5qFylZw4WW59E
+  l/yMnA/xpelC2wQP/oLiB9/6tGG+fTfLo7GImMYIz+G7g0Ba6918+6Bxzi4Wu7ZQ
+  vvypf67Ykz4jtFEDNz5sWfXSUKHYjOitB/DbqjvI6FbDXU6yHH08UoRxtiXk4ZIR
+  sMzyrTQXfnYdLpy9kT/8dkClEA0CAwEAAaNQME4wHQYDVR0OBBYEFGeMc98dS410
+  sIgJ/6BLwGcZID15MB8GA1UdIwQYMBaAFGeMc98dS410sIgJ/6BLwGcZID15MAwG
+  A1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAKMaQ01oTZOLD5E+3m40tYO3
+  CehssPoQ0Vl44NIGRuCG43qzB1Qknj+UYVXrwR8qlc95fjWPZwqbvVHBRbCVsKLd
+  HaGMJJyzVwAQbI4r6LvqZLDK+CwW6AmOgs9iUSs2VZdFrFgNpkeHRJINdPQXUiQv
+  ryIElUGeqc9bwgEL8ApWEcst7ndaV/JsjQnD/IdZpciJR+xl9/BW3XbrU5fxbwMk
+  0iJe/D6rkbvQwzAtQTr9CSpPcjwAVvhC4VNMSb/mkvpFbxwj5yOXgpsTuIsajz/5
+  v5z+LVor5NwQuFhoHY+p+G3aB0GDIEfz1mEd8yDKj/4H7a+gfVQaUa4OpE3Fx+w=
+  -----END CERTIFICATE-----
