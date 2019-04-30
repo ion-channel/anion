@@ -16,7 +16,7 @@ services:
   postgres:
     image: ionchannel/testdb:latest
     ports:
-      - 5432
+      - 5432:5432
     networks:
       - database_network
     healthcheck:

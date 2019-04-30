@@ -23,6 +23,7 @@ ci_setup: ## Setup the ci environment
 	@curl -O https://bootstrap.pypa.io/get-pip.py
 	@python3.4 get-pip.py --user
 	@pip install --user awscli
+	@sudo /etc/init.d/postgresql stop
 
 .PHONY: clean
 clean: clean_files  ## Cleanup all running and generated items
