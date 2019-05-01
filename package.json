@@ -1,5 +1,6 @@
 {
 	"name": "anion",
+	"version": "0.0.1",
 	"description": "A Node SDK for the Ion Channel API",
 	"main": "anion.js",
 	"engines": {
