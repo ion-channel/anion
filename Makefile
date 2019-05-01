@@ -94,8 +94,8 @@ test: unit_test integration_test ## Run all tests available
 
 .PHONY: unit_test
 unit_test:  ## Run unit tests
-	@yarn run mocha --require babel-core/register "lib/**/*.test.js"
+	@yarn run jest --config=jest.unit.config.js
 
 .PHONY: integration_test
 integration_test:  ## Run integration tests
-	@yarn run mocha --require babel-core/register "lib/**/*.test.int.js"
+	@yarn run jest --config=jest.integration.config.js
