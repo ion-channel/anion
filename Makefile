@@ -19,9 +19,9 @@ ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
 	@echo "Installing AWS cli"
 	@sudo apt-get -y -qq update
-	@sudo apt-get -y -qq install python3.4-dev
+	@sudo apt-get -y -qq install python3.5-dev
 	@curl -O https://bootstrap.pypa.io/get-pip.py
-	@python3.4 get-pip.py --user
+	@python3.5 get-pip.py --user
 	@pip install --user awscli
 	@sudo /etc/init.d/postgresql stop
 
