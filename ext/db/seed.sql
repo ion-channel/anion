@@ -9123,6 +9123,9 @@ CREATE TABLE deliveries (
     project_id text,
     destination text,
     status text,
+    label text,
+    message text,
+    hazh text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     filename character varying
@@ -9150,99 +9153,6 @@ CREATE TABLE scan_statuses (
 
 
 ALTER TABLE scan_statuses OWNER TO postgres;
-
-
---
--- Name: works; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE works (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    read boolean,
-    filename text,
-    project text,
-    status text,
-    checksum character varying,
-    results json,
-    message text,
-    work json,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE works OWNER TO postgres;
-
---
--- Data for Name: analysis_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY analysis_statuses (id, team_id, project_id, build_number, status, message, created_at, updated_at, branch) FROM stdin;
-\.
-
-
---
--- Data for Name: deliveries; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY deliveries (id, analysis_id, team_id, project_id, destination, status, created_at, updated_at, filename) FROM stdin;
-\.
-
-
---
--- Data for Name: scan_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY scan_statuses (id, analysis_status_id, team_id, project_id, name, read, status, message, created_at, updated_at) FROM stdin;
-\.
-
-
---
--- Data for Name: works; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY works (id, read, filename, project, status, checksum, results, message, work, created_at, updated_at) FROM stdin;
-\.
-
---
--- Name: analysis_statuses analysis_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY analysis_statuses
-    ADD CONSTRAINT analysis_statuses_pkey PRIMARY KEY (id);
-
-
---
--- Name: deliveries deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY deliveries
-    ADD CONSTRAINT deliveries_pkey PRIMARY KEY (id);
-
-
---
--- Name: scan_statuses scan_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY scan_statuses
-    ADD CONSTRAINT scan_statuses_pkey PRIMARY KEY (id);
-
-
---
--- Name: works works_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY works
-    ADD CONSTRAINT works_pkey PRIMARY KEY (id);
-
-
---
--- PostgreSQL database dump complete
---
-
-
-
-SELECT NULL AS "Finished seeding...";
 
 
 
@@ -9279,11 +9189,34 @@ COPY scan_statuses (id, analysis_status_id, team_id, project_id, name, read, sta
 
 
 --
--- Data for Name: works; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: analysis_statuses analysis_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-COPY works (id, read, filename, project, status, checksum, results, message, work, created_at, updated_at) FROM stdin;
-feb0d519-cbb0-4703-a8ce-c7d16e5ba897	t	\N	\N	accepted	\N	\N	foo	\N	2018-06-29 22:28:14.742927	2018-06-29 22:28:14.747332
-\.
+ALTER TABLE ONLY analysis_statuses
+    ADD CONSTRAINT analysis_statuses_pkey PRIMARY KEY (id);
 
-SELECT NULL AS "Finished seeding... again";
+
+--
+-- Name: deliveries deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY deliveries
+    ADD CONSTRAINT deliveries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: scan_statuses scan_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY scan_statuses
+    ADD CONSTRAINT scan_statuses_pkey PRIMARY KEY (id);
+
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+
+
+SELECT NULL AS "Finished seeding...";
