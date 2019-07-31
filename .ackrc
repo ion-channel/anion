@@ -5,3 +5,4 @@
 --ignore-dir=.idea/
 --ignore-dir=coverage/
 --ignore-dir=vendor/
+--ignore-dir=node_modules/
