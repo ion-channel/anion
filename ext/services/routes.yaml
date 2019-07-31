@@ -31,11 +31,11 @@ routes:
   /v1/search:
     backend: "http://rosita:4567"
   /v1/report:
-    backend: "http://statler:4567"
+    backend: "https://statler.ionchannel.testing:4567"
   /v1/ruleset:
     backend: "http://waldorf:4567"
   /v1/project:
-    backend: "http://yolanda:4567"
+    backend: "https://yolanda.ionchannel.testing:4567"
 ca: |
   -----BEGIN CERTIFICATE-----
   MIIELTCCAxWgAwIBAgIJAOaMvdsWGBh6MA0GCSqGSIb3DQEBCwUAMIGsMQswCQYD
