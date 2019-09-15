@@ -14,11 +14,9 @@ SET standard_conforming_strings = on;
 CREATE DATABASE kermit WITH TEMPLATE = template0 OWNER = postgres;
 CREATE DATABASE animal WITH TEMPLATE = template0 OWNER = postgres;
 CREATE DATABASE bunsen WITH TEMPLATE = template0 OWNER = postgres;
-CREATE DATABASE janice WITH TEMPLATE = template0 OWNER = postgres;
 REVOKE CONNECT,TEMPORARY ON DATABASE template1 FROM PUBLIC;
 GRANT CONNECT ON DATABASE template1 TO PUBLIC;
 CREATE DATABASE waldorf WITH TEMPLATE = template0 OWNER = postgres;
-CREATE DATABASE yolanda WITH TEMPLATE = template0 OWNER = postgres;
 
 
 \connect animal
@@ -7683,9 +7681,6 @@ CREATE TRIGGER update_cv_table AFTER INSERT OR UPDATE ON vulnerability_versions 
 -- PostgreSQL database dump complete
 --
 
-\connect janice
-
-SET default_transaction_read_only = off;
 
 --
 -- PostgreSQL database dump
@@ -7737,603 +7732,6 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
---
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE schema_migrations (
-    version character varying NOT NULL
-);
-
-
-ALTER TABLE schema_migrations OWNER TO postgres;
-
---
--- Name: team_users; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE team_users (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    team_id uuid NOT NULL,
-    user_id uuid NOT NULL,
-    role character varying NOT NULL,
-    deleted_at timestamp without time zone,
-    status character varying DEFAULT 'pending'::character varying,
-    inviter uuid,
-    invited_at timestamp without time zone
-);
-
-
-ALTER TABLE team_users OWNER TO postgres;
-
---
--- Name: teams; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE teams (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    name character varying,
-    sys_admin boolean DEFAULT false,
-    deleted_at timestamp without time zone,
-    poc_name character varying DEFAULT ''::character varying NOT NULL,
-    poc_email character varying DEFAULT ''::character varying NOT NULL,
-    poc_name_hash character varying DEFAULT ''::character varying NOT NULL,
-    poc_email_hash character varying DEFAULT ''::character varying NOT NULL,
-    delivery_location text DEFAULT ''::text,
-    access_key text DEFAULT ''::text,
-    secret_key text DEFAULT ''::text,
-    delivery_region text DEFAULT ''::text
-);
-
-
-ALTER TABLE teams OWNER TO postgres;
-
---
--- Name: tokens; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE tokens (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    user_id uuid,
-    expires_at timestamp without time zone,
-    name character varying,
-    cli boolean DEFAULT false
-);
-
-
-ALTER TABLE tokens OWNER TO postgres;
-
---
--- Name: user_metadata; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE user_metadata (
-    id integer NOT NULL,
-    user_id uuid NOT NULL,
-    username text NOT NULL,
-    metadata text NOT NULL
-);
-
-
-ALTER TABLE user_metadata OWNER TO postgres;
-
---
--- Name: user_metadata_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE user_metadata_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE user_metadata_id_seq OWNER TO postgres;
-
---
--- Name: user_metadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE user_metadata_id_seq OWNED BY user_metadata.id;
-
-
---
--- Name: user_preferences; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE user_preferences (
-    id integer NOT NULL,
-    user_id uuid NOT NULL,
-    channel_preference text NOT NULL,
-    deleted_at timestamp without time zone,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    all_vulns boolean
-);
-
-
-ALTER TABLE user_preferences OWNER TO postgres;
-
---
--- Name: user_preferences_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE user_preferences_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE user_preferences_id_seq OWNER TO postgres;
-
---
--- Name: user_preferences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE user_preferences_id_seq OWNED BY user_preferences.id;
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE users (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    username character varying,
-    password_digest character varying,
-    email character varying NOT NULL,
-    chat_handle character varying,
-    deleted_at timestamp without time zone,
-    last_active_at timestamp without time zone DEFAULT '2018-05-31 16:59:23.50034'::timestamp without time zone,
-    email_hash character varying DEFAULT ''::character varying NOT NULL,
-    externally_managed boolean DEFAULT false,
-    system boolean DEFAULT false
-);
-
-
-ALTER TABLE users OWNER TO postgres;
-
---
--- Name: users_to_projects; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE users_to_projects (
-    id integer NOT NULL,
-    user_id uuid NOT NULL,
-    project_name text NOT NULL,
-    project_versions character varying,
-    org character varying
-);
-
-
-ALTER TABLE users_to_projects OWNER TO postgres;
-
---
--- Name: users_to_projects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE users_to_projects_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE users_to_projects_id_seq OWNER TO postgres;
-
---
--- Name: users_to_projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE users_to_projects_id_seq OWNED BY users_to_projects.id;
-
-
---
--- Name: users_to_vulns; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE users_to_vulns (
-    id integer NOT NULL,
-    user_id uuid NOT NULL,
-    external_vuln_id text NOT NULL
-);
-
-
-ALTER TABLE users_to_vulns OWNER TO postgres;
-
---
--- Name: users_to_vulns_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE users_to_vulns_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE users_to_vulns_id_seq OWNER TO postgres;
-
---
--- Name: users_to_vulns_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE users_to_vulns_id_seq OWNED BY users_to_vulns.id;
-
-
---
--- Name: user_metadata id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_metadata ALTER COLUMN id SET DEFAULT nextval('user_metadata_id_seq'::regclass);
-
-
---
--- Name: user_preferences id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_preferences ALTER COLUMN id SET DEFAULT nextval('user_preferences_id_seq'::regclass);
-
-
---
--- Name: users_to_projects id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_projects ALTER COLUMN id SET DEFAULT nextval('users_to_projects_id_seq'::regclass);
-
-
---
--- Name: users_to_vulns id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_vulns ALTER COLUMN id SET DEFAULT nextval('users_to_vulns_id_seq'::regclass);
-
-
---
--- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY schema_migrations (version) FROM stdin;
-20160726224139
-20160727060350
-20160727060351
-20160727060352
-20160727060353
-20160727060354
-20160727060355
-20160727060356
-20160727060357
-20160727060358
-20160727060359
-20161025103044
-20161027170523
-20161102215723
-20161218094600
-20161222182537
-20170103121211
-20170106145122
-20170106145213
-20170125145211
-20170127143130
-20170215161735
-20170403162146
-20170412121106
-20170424153532
-20170610145227
-20170629135417
-20170706135417
-20171213135417
-20171222135417
-20180328104400
-\.
-
-
---
--- Data for Name: team_users; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY team_users (id, created_at, updated_at, team_id, user_id, role, deleted_at, status, inviter, invited_at) FROM stdin;
-6794c0fa-fde8-43e8-a608-13a76d610388	2018-05-31 16:59:24.380315	2018-05-31 16:59:24.380315	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	admin	\N	active	\N	2018-05-31 16:59:24.381168
-903f97be-2d7f-4640-bef8-499f7963dd9e	2018-05-31 16:59:32.475379	2018-05-31 16:59:32.475379	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	4f5bbc94-448a-40e2-90a6-ac95687491ac	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.475564
-e0adb970-d217-4e7e-b295-e869ba34c364	2018-05-31 16:59:32.598814	2018-05-31 16:59:32.598814	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	d14d0fd6-ab4e-446c-94fb-2b18b9a9e799	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.598931
-19b27b67-a1de-439b-b2ee-0570a6c9e54b	2018-05-31 16:59:32.753366	2018-05-31 16:59:32.753366	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	834c6653-a2ad-46a0-a869-43fab13fabe3	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.753502
-\.
-
-
---
--- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY teams (id, created_at, updated_at, name, sys_admin, deleted_at, poc_name, poc_email, poc_name_hash, poc_email_hash) FROM stdin;
-bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	2018-05-31 16:59:24.334349	2018-05-31 16:59:24.334349	ion-channel	t	\N	ylU/wv2ZeJye28uZ3C2tNuyEfeHntY4FbQ/CAj0YL20=\n	2ZO4Ht/AwVRx1HL0z35e3UUqSBMRsUoAAraZJrEJqHOYy3Db+U56no9eAwIQ\nH3W7\n	d6806158f75334002321a9333b6b02b9b84b51433400afb68bb197bddc2db6a5	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2
-bdfda532-4450-4b64-8150-338d72fb4f41	2018-05-31 16:59:34.62809	2018-05-31 16:59:34.62809	Team 2	f	\N	ylU/wv2ZeJye28uZ3C2tNuyEfeHntY4FbQ/CAj0YL20=\n	2ZO4Ht/AwVRx1HL0z35e3UUqSBMRsUoAAraZJrEJqHOYy3Db+U56no9eAwIQ\nH3W7\n	d6806158f75334002321a9333b6b02b9b84b51433400afb68bb197bddc2db6a5	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2
-\.
-
-
---
--- Data for Name: tokens; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY tokens (id, created_at, updated_at, user_id, expires_at, name, cli) FROM stdin;
-d55f3a73-ad9e-4e58-b8f6-6c578d5bf39d	2018-05-31 16:59:32.18595	2018-05-31 16:59:32.18595	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 17:14:32.178665	\N	f
-\.
-
-
---
--- Data for Name: user_metadata; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY user_metadata (id, user_id, username, metadata) FROM stdin;
-\.
-
-
---
--- Name: user_metadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('user_metadata_id_seq', 1, false);
-
-
---
--- Data for Name: user_preferences; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY user_preferences (id, user_id, channel_preference, deleted_at, created_at, updated_at, all_vulns) FROM stdin;
-\.
-
-
---
--- Name: user_preferences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('user_preferences_id_seq', 1, false);
-
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY users (id, created_at, updated_at, username, password_digest, email, chat_handle, deleted_at, last_active_at, email_hash, externally_managed) FROM stdin;
-fe42a04c-ebcb-49ac-8579-1e0f875d70f0	2018-05-31 16:59:24.475189	2018-05-31 16:59:24.475189	foo	$2a$10$nu5q4dvNYOlooLh4yov5Fu.em3CNDWxyR5laQkDxYV/NDa1DV1l2W	2KIekVIrPtPw02/lNrUh40HItkp7cCh4excXVTADSQY=\n	\N	\N	2018-05-31 16:59:23.50034	a5722037c06f32b227f667d9b34f0018ee2e0c7ff968a6d1e2836d88cd5aa9fd	t
-756c290d-e653-41d9-875d-f62317d3bb23	2018-05-31 16:59:34.467549	2018-05-31 16:59:34.467549	updateuser	$2a$10$LUNEow28gBHfVBdMnjIoAOUnT6ncOntOjaMqQ7iHjIgHerAi3bM.e	MSevvZnA2LEoVmGe67qA25lUe6dTmR6xprRoWHG545/RwMnAkqz7li6Fi83c\nRRn2\n	\N	\N	2018-05-31 16:59:23.50034	57086149736ce136eced0ae1de9d371986ffa937cab06763fbb4e0301b08feb2	f
-4f5bbc94-448a-40e2-90a6-ac95687491ac	2018-05-31 16:59:32.402924	2018-05-31 16:59:32.402924	normaluser	$2a$10$6O2K74E4hd9oiQskSL6EYuC9qFsQ7oOlut8U4KsgKC.wxBg0FCI2W	rhqsBQEElHPpBJyyskUR7BPlG8mUz9Tlz7XCqZM8Ek1e/t0pzuze6JTJ56F6\n6694\n	\N	\N	2018-05-31 16:59:23.50034	64f1ae90caad1096a784da07fb2c0b04a88716fa1de95821a3d2e6f8294b999e	f
-fc0cf7cd-2d2c-486f-b153-ea1c2b38c914	2018-05-31 16:59:34.575433	2018-05-31 16:59:34.575433	inviteuser	$2a$10$cPrhXbEFhhYGMG5KcAblhOsHoH2jJSiezfmtuietWyHsBYUgvuBPG	MGIovG3WNF5Aex2litvbPtpwMeia3JOMikyimsEFMxtCQsQT8A7JIu0nHNWu\nacSQ\n	\N	\N	2018-05-31 16:59:23.50034	8c0cef481a74f74b5b96e0801f9b187390bbdcb77a4309068676c6ad0a00913f	f
-d14d0fd6-ab4e-446c-94fb-2b18b9a9e799	2018-05-31 16:59:32.562971	2018-05-31 16:59:32.562971	inviteuser2	$2a$10$sjiFMUR.oGjyxL/VcYQvreR2j9L5h8J3jtZj2pSyZ7DR0zRHpSh3.	Q+5Bk0cVRBBfJTNbAhHEJqSi83p0oqQgyEmRpRF59ieuKcnBxY9awY7SF98v\n5OtI\n	\N	\N	2018-05-31 16:59:23.50034	90a84b342bb10e577e1af94904b9853dd4fde710fc1fa94e0ad263e72ae1aea5	f
-834c6653-a2ad-46a0-a869-43fab13fabe3	2018-05-31 16:59:32.687689	2018-05-31 16:59:32.687689	inviteuser3	$2a$10$ckt02fhrBRvwrrDwlHLpv.sizTGe6cBJg2DPhbDFr8S/5ybck8Lay	C/20wUPksg0NRXXG/iXC1vyyGoA3yHhm6nKSIsrRh7yLftvycIpn5BLHexfe\noM3a\n	\N	\N	2018-05-31 16:59:23.50034	f325e4d46d3116ef6c9a5fc64801a4186abca81c94c17ea78cef61bcb80253b3	f
-eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:24.303814	2018-05-31 16:59:34.614221	ion	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	1TtZk9y+4JN+ZmM7lwq38umjKV/pY/VUSLqNGE/7MxXtYDhUMnZ+TyHXFshY\nPu/A\n	\N	\N	2018-05-31 16:59:34.683904	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2	f
-\.
-
-
---
--- Data for Name: users_to_projects; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY users_to_projects (id, user_id, project_name, project_versions, org) FROM stdin;
-\.
-
-
---
--- Name: users_to_projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('users_to_projects_id_seq', 1, false);
-
-
---
--- Data for Name: users_to_vulns; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY users_to_vulns (id, user_id, external_vuln_id) FROM stdin;
-\.
-
-
---
--- Name: users_to_vulns_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('users_to_vulns_id_seq', 1, false);
-
-
---
--- Name: team_users account_users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY team_users
-    ADD CONSTRAINT account_users_pkey PRIMARY KEY (id);
-
-
---
--- Name: teams accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY teams
-    ADD CONSTRAINT accounts_pkey PRIMARY KEY (id);
-
-
---
--- Name: tokens tokens_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY tokens
-    ADD CONSTRAINT tokens_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_metadata user_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_metadata
-    ADD CONSTRAINT user_metadata_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_preferences user_preferences_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_preferences
-    ADD CONSTRAINT user_preferences_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_to_projects users_to_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_projects
-    ADD CONSTRAINT users_to_projects_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_to_vulns users_to_vulns_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_vulns
-    ADD CONSTRAINT users_to_vulns_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_team_users_on_deleted_at; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_team_users_on_deleted_at ON team_users USING btree (deleted_at);
-
-
---
--- Name: index_team_users_on_team_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_team_users_on_team_id ON team_users USING btree (team_id);
-
-
---
--- Name: index_team_users_on_team_id_and_user_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_team_users_on_team_id_and_user_id ON team_users USING btree (team_id, user_id);
-
-
---
--- Name: index_team_users_on_team_id_and_user_id_and_deleted_at; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX index_team_users_on_team_id_and_user_id_and_deleted_at ON team_users USING btree (team_id, user_id, deleted_at);
-
-
---
--- Name: index_team_users_on_user_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_team_users_on_user_id ON team_users USING btree (user_id);
-
-
---
--- Name: index_teams_on_deleted_at; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_teams_on_deleted_at ON teams USING btree (deleted_at);
-
-
---
--- Name: index_tokens_on_user_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_tokens_on_user_id ON tokens USING btree (user_id);
-
-
---
--- Name: index_user_metadata_on_user_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_user_metadata_on_user_id ON user_metadata USING btree (user_id);
-
-
---
--- Name: index_user_preferences_on_user_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_user_preferences_on_user_id ON user_preferences USING btree (user_id);
-
-
---
--- Name: index_users_on_deleted_at; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_users_on_deleted_at ON users USING btree (deleted_at);
-
-
---
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
-
---
--- Name: users_to_projects fk_rails_0e2f4c96e4; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_projects
-    ADD CONSTRAINT fk_rails_0e2f4c96e4 FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: users_to_vulns fk_rails_2fc61fd1d1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY users_to_vulns
-    ADD CONSTRAINT fk_rails_2fc61fd1d1 FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: user_metadata fk_rails_4befb190c1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_metadata
-    ADD CONSTRAINT fk_rails_4befb190c1 FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: team_users fk_rails_685e030c15; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY team_users
-    ADD CONSTRAINT fk_rails_685e030c15 FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: user_preferences fk_rails_a69bfcfd81; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_preferences
-    ADD CONSTRAINT fk_rails_a69bfcfd81 FOREIGN KEY (user_id) REFERENCES users(id);
-
-
---
--- Name: team_users fk_rails_c96445f213; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY team_users
-    ADD CONSTRAINT fk_rails_c96445f213 FOREIGN KEY (team_id) REFERENCES teams(id);
 
 
 --
@@ -8729,320 +8127,6 @@ CREATE INDEX trifecta_of_doom ON rule_evaluations USING btree (team_id, project_
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
 
 
---
--- PostgreSQL database dump complete
---
-
-\connect yolanda
-
-SET default_transaction_read_only = off;
-
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.1
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner:
---
-
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
-
-
---
--- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner:
---
-
-COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
---
--- Name: aliases; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE aliases (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    name character varying NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    version character varying,
-    org character varying
-);
-
-
-ALTER TABLE aliases OWNER TO postgres;
-
---
--- Name: aliases_projects; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE aliases_projects (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    alias_id uuid,
-    project_id uuid
-);
-
-
-ALTER TABLE aliases_projects OWNER TO postgres;
-
---
--- Name: projects; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE projects (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    team_id character varying,
-    ruleset_id character varying,
-    name character varying,
-    type character varying,
-    source character varying,
-    branch character varying,
-    description text,
-    active boolean,
-    chat_channel character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    deploy_key text DEFAULT ''::text,
-    should_monitor boolean DEFAULT false,
-    poc_name character varying DEFAULT ''::character varying NOT NULL,
-    poc_email character varying DEFAULT ''::character varying NOT NULL,
-    username character varying DEFAULT ''::character varying,
-    password character varying DEFAULT ''::character varying,
-    key_fingerprint character varying DEFAULT ''::character varying,
-    poc_name_hash character varying DEFAULT ''::character varying NOT NULL,
-    poc_email_hash character varying DEFAULT ''::character varying NOT NULL
-);
-
-
-ALTER TABLE projects OWNER TO postgres;
-
---
--- Name: projects_tags; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE projects_tags (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    tag_id uuid,
-    project_id uuid
-);
-
-
-ALTER TABLE projects_tags OWNER TO postgres;
-
---
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE schema_migrations (
-    version character varying NOT NULL
-);
-
-
-ALTER TABLE schema_migrations OWNER TO postgres;
-
---
--- Name: tags; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE tags (
-    id uuid DEFAULT uuid_generate_v4() NOT NULL,
-    team_id character varying,
-    name character varying NOT NULL,
-    description character varying,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
-ALTER TABLE tags OWNER TO postgres;
-
---
--- Data for Name: aliases; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY aliases (id, name, created_at, updated_at, version, org) FROM stdin;
-\.
-
-
---
--- Data for Name: aliases_projects; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY aliases_projects (id, alias_id, project_id) FROM stdin;
-\.
-
-
---
--- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY projects (id, team_id, ruleset_id, name, type, source, branch, description, active, chat_channel, created_at, updated_at, deploy_key, should_monitor, poc_name, poc_email, username, password) FROM stdin;
-8ca10aea-7451-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	cat-project	git	cat-hub	cat-master		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-81838d7e-3ecb-4989-ad9c-ca156a538391	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	virus-project	git	git@github.com:ion-channel/eicar.git	master		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-8ca10aea-7449-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	no-virus-project	git	cat-hub	cat-mini		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-a4d92c7e-1678-411a-9f6f-03d4d50ceb0d	bdfda532-4450-4b64-8150-338d72fb4f41	003c6378-c8ef-4a74-9bc1-334e95d24d2b	dog-project	git	dog-hub	dog-master		t	dog-channel	2018-05-31 16:59:34.687187	2018-05-31 16:59:34.687187		f			\N	\N
-8ca10aea-7448-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	many-virus-project	git	cat-hub	cat-minion		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-\.
-
---
---
--- Data for Name: projects_tags; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY projects_tags (id, tag_id, project_id) FROM stdin;
-\.
-
-
---
--- Data for Name: schema_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY schema_migrations (version) FROM stdin;
-0
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-\.
-
-
---
--- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY tags (id, team_id, name, description, created_at, updated_at) FROM stdin;
-\.
-
-
---
--- Name: tags portfolios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY tags
-    ADD CONSTRAINT portfolios_pkey PRIMARY KEY (id);
-
-
---
--- Name: projects_tags portfolios_projects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY projects_tags
-    ADD CONSTRAINT portfolios_projects_pkey PRIMARY KEY (id);
-
-
---
--- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY projects
-    ADD CONSTRAINT projects_pkey PRIMARY KEY (id);
-
-
---
--- Name: aliases_projects projects_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY aliases_projects
-    ADD CONSTRAINT projects_tags_pkey PRIMARY KEY (id);
-
-
---
--- Name: aliases tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY aliases
-    ADD CONSTRAINT tags_pkey PRIMARY KEY (id);
-
-
---
--- Name: index_aliases_projects_on_alias_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_aliases_projects_on_alias_id ON aliases_projects USING btree (alias_id);
-
-
---
--- Name: index_aliases_projects_on_project_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_aliases_projects_on_project_id ON aliases_projects USING btree (project_id);
-
-
---
--- Name: index_projects_on_branch_and_source_and_team_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX index_projects_on_branch_and_source_and_team_id ON projects USING btree (branch, source, team_id);
-
-
---
--- Name: index_projects_tags_on_project_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_projects_tags_on_project_id ON projects_tags USING btree (project_id);
-
-
---
--- Name: index_projects_tags_on_tag_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_projects_tags_on_tag_id ON projects_tags USING btree (tag_id);
-
-
---
--- Name: index_tags_on_team_id; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX index_tags_on_team_id ON tags USING btree (team_id);
-
-
---
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
-
 
 --
 -- PostgreSQL database dump complete
@@ -9123,12 +8207,12 @@ CREATE TABLE deliveries (
     project_id text,
     destination text,
     status text,
-    label text,
-    message text,
-    hazh text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    filename character varying
+    filename character varying,
+    label character varying,
+    hazh character varying,
+    message character varying
 );
 
 
@@ -9155,19 +8239,32 @@ CREATE TABLE scan_statuses (
 ALTER TABLE scan_statuses OWNER TO postgres;
 
 
+--
+-- Name: works; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE works (
+    id uuid DEFAULT uuid_generate_v4() NOT NULL,
+    read boolean,
+    filename text,
+    project text,
+    status text,
+    checksum character varying,
+    results json,
+    message text,
+    work json,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE works OWNER TO postgres;
 
 --
 -- Data for Name: analysis_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY analysis_statuses (id, team_id, project_id, build_number, status, message, created_at, updated_at, branch) FROM stdin;
-56b409f4-ee60-4ee6-bfa5-c57465467cf5	2D227027-F865-45A3-9DDD-8B9567AAB797	db844096-4aa2-4a08-9a26-728b8684c740	44	accepted	Request for analysis blah.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-c32671c4-d76f-47a6-8902-ce6d81728b58	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	81838d7e-3ecb-4989-ad9c-ca156a538391	10	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-d9401f7a-703b-4179-abb6-a8ca674e0938	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7451-4fba-920e-e0abab735071	10	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-00788850-9b58-4280-97f9-fd34281e022e	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	11	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-4428a359-5f6f-445c-8f10-2ea5de800448	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-b182a814-c4c2-4c07-8c06-ec81104cdc95	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
-7074b7f2-8f3c-4494-9e1a-af858e536c57	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7448-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
 \.
 
 
@@ -9175,7 +8272,7 @@ b182a814-c4c2-4c07-8c06-ec81104cdc95	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10a
 -- Data for Name: deliveries; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY deliveries (id, analysis_id, team_id, project_id, destination, status, created_at, updated_at, filename) FROM stdin;
+COPY deliveries (id, analysis_id, team_id, project_id, destination, status, created_at, updated_at, filename, label, hazh, message) FROM stdin;
 \.
 
 
@@ -9187,6 +8284,12 @@ COPY scan_statuses (id, analysis_status_id, team_id, project_id, name, read, sta
 \.
 
 
+--
+-- Data for Name: works; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY works (id, read, filename, project, status, checksum, results, message, work, created_at, updated_at) FROM stdin;
+\.
 
 --
 -- Name: analysis_statuses analysis_statuses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -9212,6 +8315,13 @@ ALTER TABLE ONLY scan_statuses
     ADD CONSTRAINT scan_statuses_pkey PRIMARY KEY (id);
 
 
+--
+-- Name: works works_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY works
+    ADD CONSTRAINT works_pkey PRIMARY KEY (id);
+
 
 --
 -- PostgreSQL database dump complete
@@ -9220,3 +8330,40 @@ ALTER TABLE ONLY scan_statuses
 
 
 SELECT NULL AS "Finished seeding...";
+
+
+
+--
+-- Data for Name: analysis_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY analysis_statuses (id, team_id, project_id, build_number, status, message, created_at, updated_at, branch) FROM stdin;
+56b409f4-ee60-4ee6-bfa5-c57465467cf5	2D227027-F865-45A3-9DDD-8B9567AAB797	db844096-4aa2-4a08-9a26-728b8684c740	44	accepted	Request for analysis blah.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+c32671c4-d76f-47a6-8902-ce6d81728b58	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	81838d7e-3ecb-4989-ad9c-ca156a538391	10	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+d9401f7a-703b-4179-abb6-a8ca674e0938	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7451-4fba-920e-e0abab735071	10	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+00788850-9b58-4280-97f9-fd34281e022e	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	11	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+4428a359-5f6f-445c-8f10-2ea5de800448	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+b182a814-c4c2-4c07-8c06-ec81104cdc95	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7449-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+7074b7f2-8f3c-4494-9e1a-af858e536c57	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	8ca10aea-7448-4fba-920e-e0abab735071	12	finished	Your analysis is finished.	2018-06-29 22:27:59.166975	2018-06-29 22:27:59.166975	master
+\.
+
+
+
+--
+-- Data for Name: scan_statuses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY scan_statuses (id, analysis_status_id, team_id, project_id, name, read, status, message, created_at, updated_at) FROM stdin;
+\.
+
+
+
+--
+-- Data for Name: works; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY works (id, read, filename, project, status, checksum, results, message, work, created_at, updated_at) FROM stdin;
+feb0d519-cbb0-4703-a8ce-c7d16e5ba897	t	\N	\N	accepted	\N	\N	foo	\N	2018-06-29 22:28:14.742927	2018-06-29 22:28:14.747332
+\.
+
+SELECT NULL AS "Finished seeding... again";
