@@ -4,7 +4,7 @@
   "description": "A Node SDK for the Ion Channel API",
   "main": "anion.js",
   "files": [
-    "lib"
+    "lib/**"
   ],
   "engines": {
     "node": ">=10.12.0"
