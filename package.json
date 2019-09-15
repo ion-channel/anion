@@ -12,11 +12,6 @@
 	},
 	"author": "Ion Channel Dev <dev@ionchannel.io>",
 	"license": "Apache-2.0",
-	"babel": {
-		"presets": [
-			"@babel/preset-env"
-		]
-	},
 	"dependencies": {
 		"axios": "^0.18.1",
 		"js-cookie": "^2.2.0",
