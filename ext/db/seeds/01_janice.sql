@@ -251,53 +251,29 @@ CREATE INDEX index_tokens_on_user_id ON tokens USING btree (user_id);
 --- Data
 ---
 
-COPY teams (id, created_at, updated_at, name, sys_admin, deleted_at, poc_name, poc_email, poc_name_hash, poc_email_hash) FROM stdin;
-bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	2018-05-31 16:59:24.334349	2018-05-31 16:59:24.334349	ion-channel	t	\N	ylU/wv2ZeJye28uZ3C2tNuyEfeHntY4FbQ/CAj0YL20=\n	2ZO4Ht/AwVRx1HL0z35e3UUqSBMRsUoAAraZJrEJqHOYy3Db+U56no9eAwIQ\nH3W7\n	d6806158f75334002321a9333b6b02b9b84b51433400afb68bb197bddc2db6a5	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2
-bdfda532-4450-4b64-8150-338d72fb4f41	2018-05-31 16:59:34.62809	2018-05-31 16:59:34.62809	Team 2	f	\N	ylU/wv2ZeJye28uZ3C2tNuyEfeHntY4FbQ/CAj0YL20=\n	2ZO4Ht/AwVRx1HL0z35e3UUqSBMRsUoAAraZJrEJqHOYy3Db+U56no9eAwIQ\nH3W7\n	d6806158f75334002321a9333b6b02b9b84b51433400afb68bb197bddc2db6a5	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2
-\.
+COPY teams (id, created_at, updated_at, name, sys_admin, deleted_at, poc_name, poc_email, poc_name_hash, poc_email_hash)
+FROM '/docker-entrypoint-initdb.d/teams.csv' WITH DELIMITER AS ',' CSV HEADER;
 
+COPY users (id, created_at, updated_at, username, password_digest, email, chat_handle, deleted_at, last_active_at, email_hash, externally_managed)
+FROM '/docker-entrypoint-initdb.d/users.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY users (id, created_at, updated_at, username, password_digest, email, chat_handle, deleted_at, last_active_at, email_hash, externally_managed) FROM stdin;
-fe42a04c-ebcb-49ac-8579-1e0f875d70f0	2018-05-31 16:59:24.475189	2018-05-31 16:59:24.475189	foo	$2a$10$nu5q4dvNYOlooLh4yov5Fu.em3CNDWxyR5laQkDxYV/NDa1DV1l2W	2KIekVIrPtPw02/lNrUh40HItkp7cCh4excXVTADSQY=\n	\N	\N	2018-05-31 16:59:23.50034	a5722037c06f32b227f667d9b34f0018ee2e0c7ff968a6d1e2836d88cd5aa9fd	t
-756c290d-e653-41d9-875d-f62317d3bb23	2018-05-31 16:59:34.467549	2018-05-31 16:59:34.467549	updateuser	$2a$10$LUNEow28gBHfVBdMnjIoAOUnT6ncOntOjaMqQ7iHjIgHerAi3bM.e	MSevvZnA2LEoVmGe67qA25lUe6dTmR6xprRoWHG545/RwMnAkqz7li6Fi83c\nRRn2\n	\N	\N	2018-05-31 16:59:23.50034	57086149736ce136eced0ae1de9d371986ffa937cab06763fbb4e0301b08feb2	f
-4f5bbc94-448a-40e2-90a6-ac95687491ac	2018-05-31 16:59:32.402924	2018-05-31 16:59:32.402924	normaluser	$2a$10$6O2K74E4hd9oiQskSL6EYuC9qFsQ7oOlut8U4KsgKC.wxBg0FCI2W	rhqsBQEElHPpBJyyskUR7BPlG8mUz9Tlz7XCqZM8Ek1e/t0pzuze6JTJ56F6\n6694\n	\N	\N	2018-05-31 16:59:23.50034	64f1ae90caad1096a784da07fb2c0b04a88716fa1de95821a3d2e6f8294b999e	f
-fc0cf7cd-2d2c-486f-b153-ea1c2b38c914	2018-05-31 16:59:34.575433	2018-05-31 16:59:34.575433	inviteuser	$2a$10$cPrhXbEFhhYGMG5KcAblhOsHoH2jJSiezfmtuietWyHsBYUgvuBPG	MGIovG3WNF5Aex2litvbPtpwMeia3JOMikyimsEFMxtCQsQT8A7JIu0nHNWu\nacSQ\n	\N	\N	2018-05-31 16:59:23.50034	8c0cef481a74f74b5b96e0801f9b187390bbdcb77a4309068676c6ad0a00913f	f
-d14d0fd6-ab4e-446c-94fb-2b18b9a9e799	2018-05-31 16:59:32.562971	2018-05-31 16:59:32.562971	inviteuser2	$2a$10$sjiFMUR.oGjyxL/VcYQvreR2j9L5h8J3jtZj2pSyZ7DR0zRHpSh3.	Q+5Bk0cVRBBfJTNbAhHEJqSi83p0oqQgyEmRpRF59ieuKcnBxY9awY7SF98v\n5OtI\n	\N	\N	2018-05-31 16:59:23.50034	90a84b342bb10e577e1af94904b9853dd4fde710fc1fa94e0ad263e72ae1aea5	f
-834c6653-a2ad-46a0-a869-43fab13fabe3	2018-05-31 16:59:32.687689	2018-05-31 16:59:32.687689	inviteuser3	$2a$10$ckt02fhrBRvwrrDwlHLpv.sizTGe6cBJg2DPhbDFr8S/5ybck8Lay	C/20wUPksg0NRXXG/iXC1vyyGoA3yHhm6nKSIsrRh7yLftvycIpn5BLHexfe\noM3a\n	\N	\N	2018-05-31 16:59:23.50034	f325e4d46d3116ef6c9a5fc64801a4186abca81c94c17ea78cef61bcb80253b3	f
-eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:24.303814	2018-05-31 16:59:34.614221	ion	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	1TtZk9y+4JN+ZmM7lwq38umjKV/pY/VUSLqNGE/7MxXtYDhUMnZ+TyHXFshY\nPu/A\n	\N	\N	2018-05-31 16:59:34.683904	b8a7b17eed63f5f860bfe2c0e7574ce6409678d5e2c801bf7486631142de4bf2	f
-\.
+COPY team_users (id, created_at, updated_at, team_id, user_id, role, deleted_at, status, inviter, invited_at)
+FROM '/docker-entrypoint-initdb.d/team_users.csv' WITH DELIMITER AS ',' CSV HEADER;
 
+COPY team_deliveries (id, team_id, location, access_key, secret_key, region, name, type, deleted_at)
+FROM '/docker-entrypoint-initdb.d/team_deliveries.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY team_users (id, created_at, updated_at, team_id, user_id, role, deleted_at, status, inviter, invited_at) FROM stdin;
-6794c0fa-fde8-43e8-a608-13a76d610388	2018-05-31 16:59:24.380315	2018-05-31 16:59:24.380315	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	admin	\N	active	\N	2018-05-31 16:59:24.381168
-903f97be-2d7f-4640-bef8-499f7963dd9e	2018-05-31 16:59:32.475379	2018-05-31 16:59:32.475379	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	4f5bbc94-448a-40e2-90a6-ac95687491ac	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.475564
-e0adb970-d217-4e7e-b295-e869ba34c364	2018-05-31 16:59:32.598814	2018-05-31 16:59:32.598814	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	d14d0fd6-ab4e-446c-94fb-2b18b9a9e799	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.598931
-19b27b67-a1de-439b-b2ee-0570a6c9e54b	2018-05-31 16:59:32.753366	2018-05-31 16:59:32.753366	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	834c6653-a2ad-46a0-a869-43fab13fabe3	member	\N	pending	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 16:59:32.753502
-\.
+COPY user_metadata (id, user_id, username, metadata)
+FROM '/docker-entrypoint-initdb.d/user_metadata.csv' WITH DELIMITER AS ',' CSV HEADER;
 
+COPY users_to_projects (id, user_id, project_name, project_versions, org)
+FROM '/docker-entrypoint-initdb.d/users_to_projects.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY team_deliveries (id, team_id, location, access_key, secret_key, region, name, type, deleted_at) FROM stdin;
-22ecbc90-c0f4-46cb-958b-81c8f725588b	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	somebucketpath	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	us-east-1	testing-env	s3	\N
-503098ac-d01e-44ee-b802-dee7eacf9e8b	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	anotherbucket	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	us-east-1	prod-env	s3	\N
-39941d46-8a31-4053-a7be-1b1f428c190d	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	deletedthisone	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK	us-east-1	prod-env	s3	2018-05-31 16:59:24.381168
-\.
+COPY users_to_vulns (id, user_id, external_vuln_id)
+FROM '/docker-entrypoint-initdb.d/users_to_vulns.csv' WITH DELIMITER AS ',' CSV HEADER;
 
+COPY user_preferences (id, user_id, channel_preference, deleted_at, created_at, updated_at, all_vulns)
+FROM '/docker-entrypoint-initdb.d/user_preferences.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY user_metadata (id, user_id, username, metadata) FROM stdin;
-\.
-
-
-COPY users_to_projects (id, user_id, project_name, project_versions, org) FROM stdin;
-\.
-
-
-COPY users_to_vulns (id, user_id, external_vuln_id) FROM stdin;
-\.
-
-
-COPY user_preferences (id, user_id, channel_preference, deleted_at, created_at, updated_at, all_vulns) FROM stdin;
-\.
-
-COPY tokens (id, created_at, updated_at, user_id, expires_at, name, cli) FROM stdin;
-d55f3a73-ad9e-4e58-b8f6-6c578d5bf39d	2018-05-31 16:59:32.18595	2018-05-31 16:59:32.18595	eaf1080e-48d4-4169-a2dc-d92569ddd7a4	2018-05-31 17:14:32.178665	\N	f
-\.
+COPY tokens (id, created_at, updated_at, user_id, expires_at, name, cli)
+FROM '/docker-entrypoint-initdb.d/tokens.csv' WITH DELIMITER AS ',' CSV HEADER;
