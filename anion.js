@@ -1,5 +1,6 @@
 export { Auth } from './lib/auth/auth'
 export { Reports } from './lib/reports/reports'
+export { Searches } from './lib/searches/searches'
 export { Sessions } from './lib/sessions/sessions'
 export { Teams } from './lib/teams/teams'
 export { Vulnerabilities } from './lib/vulnerabilities/vulnerabilities'
