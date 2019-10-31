@@ -1,0 +1,4 @@
+id,team_id,location,access_key,secret_key,region,name,type,deleted_at
+22ecbc90-c0f4-46cb-958b-81c8f725588b,bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c,somebucketpath,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,us-east-1,testing-env,s3,
+503098ac-d01e-44ee-b802-dee7eacf9e8b,bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c,anotherbucket,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,us-east-1,prod-env,s3,
+39941d46-8a31-4053-a7be-1b1f428c190d,bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c,deletedthisone,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,$2a$10$kvNu2113r/o5l6rpSoH1POdzQFyE.sVizIYrMQWfTX96ro1i5PwZK,us-east-1,prod-env,s3,2018-05-31 16:59:24.381168

@@ -107,26 +107,17 @@ CREATE INDEX index_projects_tags_on_tag_id ON projects_tags USING btree (tag_id)
 --- Data
 ---
 
-COPY projects (id, team_id, ruleset_id, name, type, source, branch, description, active, chat_channel, created_at, updated_at, deploy_key, should_monitor, poc_name, poc_email, username, password) FROM stdin;
-8ca10aea-7451-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	cat-project	git	cat-hub	cat-master		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-81838d7e-3ecb-4989-ad9c-ca156a538391	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	virus-project	git	git@github.com:ion-channel/eicar.git	master		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-8ca10aea-7449-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	no-virus-project	git	cat-hub	cat-mini		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-a4d92c7e-1678-411a-9f6f-03d4d50ceb0d	bdfda532-4450-4b64-8150-338d72fb4f41	003c6378-c8ef-4a74-9bc1-334e95d24d2b	dog-project	git	dog-hub	dog-master		t	dog-channel	2018-05-31 16:59:34.687187	2018-05-31 16:59:34.687187		f			\N	\N
-8ca10aea-7448-4fba-920e-e0abab735071	bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c	85d05a6b-bc96-430e-8e81-ba87cab84230	many-virus-project	git	cat-hub	cat-minion		t	cat-channel	2018-05-31 16:59:32.969012	2018-05-31 16:59:32.969012		f			\N	\N
-\.
+COPY projects (id, team_id, ruleset_id, name, type, source, branch, description, active, chat_channel, created_at, updated_at, deploy_key, should_monitor, poc_name, poc_email, username, password)
+FROM '/docker-entrypoint-initdb.d/projects.csv' WITH DELIMITER AS ',' NULL 'null' CSV HEADER;
 
+COPY aliases (id, name, created_at, updated_at, version, org)
+FROM '/docker-entrypoint-initdb.d/aliases.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY aliases (id, name, created_at, updated_at, version, org) FROM stdin;
-\.
+COPY aliases_projects (id, alias_id, project_id)
+FROM '/docker-entrypoint-initdb.d/aliases_projects.csv' WITH DELIMITER AS ',' CSV HEADER;
 
+COPY tags (id, team_id, name, description, created_at, updated_at)
+FROM '/docker-entrypoint-initdb.d/tags.csv' WITH DELIMITER AS ',' CSV HEADER;
 
-COPY aliases_projects (id, alias_id, project_id) FROM stdin;
-\.
-
-
-COPY tags (id, team_id, name, description, created_at, updated_at) FROM stdin;
-\.
-
-
-COPY projects_tags (id, tag_id, project_id) FROM stdin;
-\.
+COPY projects_tags (id, tag_id, project_id)
+FROM '/docker-entrypoint-initdb.d/projects_tags.csv' WITH DELIMITER AS ',' CSV HEADER;

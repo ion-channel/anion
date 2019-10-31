@@ -1,4 +1,3 @@
-from postgres:9.6.2-alpine
+from postgres:9.6.15-alpine
 
-COPY ./seed.sql /docker-entrypoint-initdb.d/seed.sql
 COPY ./seeds/ /docker-entrypoint-initdb.d/
