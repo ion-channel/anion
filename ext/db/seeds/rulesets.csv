@@ -1,0 +1,4 @@
+id,team_id,name,description,rule_ids,created_at,updated_at
+85d05a6b-bc96-430e-8e81-ba87cab84230,bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c,test-ruleset,test ruleset description,,2018-05-31 16:59:32.81324,2018-05-31 16:59:32.81324
+4ad3633c-0ada-4489-8a67-41086e460fcf,bdfda532-4450-4b64-8150-338d72fb4f41,team 2 ruleset,a ruleset just for team 2,,2018-06-28 19:42:18.44032,2018-06-28 19:42:18.44032
+42135c81-4603-4109-ad3e-911cc7831b55,bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c,a new ruleset,"a new ruleset, that starts with the letter A",,2018-10-29 23:44:47.314523,2018-10-29 23:44:47.314523

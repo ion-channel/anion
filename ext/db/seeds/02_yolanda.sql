@@ -25,6 +25,7 @@ CREATE TABLE projects (
     updated_at timestamp without time zone NOT NULL,
     deploy_key text DEFAULT ''::text,
     should_monitor boolean DEFAULT false,
+    monitor_frequency varchar(100),
     poc_name character varying DEFAULT ''::character varying NOT NULL,
     poc_email character varying DEFAULT ''::character varying NOT NULL,
     username character varying DEFAULT ''::character varying,
@@ -107,7 +108,7 @@ CREATE INDEX index_projects_tags_on_tag_id ON projects_tags USING btree (tag_id)
 --- Data
 ---
 
-COPY projects (id, team_id, ruleset_id, name, type, source, branch, description, active, chat_channel, created_at, updated_at, deploy_key, should_monitor, poc_name, poc_email, username, password)
+COPY projects (id, team_id, ruleset_id, name, type, source, branch, description, active, chat_channel, created_at, updated_at, deploy_key, should_monitor, monitor_frequency, poc_name, poc_email, username, password)
 FROM '/docker-entrypoint-initdb.d/projects.csv' WITH DELIMITER AS ',' NULL 'null' CSV HEADER;
 
 COPY aliases (id, name, created_at, updated_at, version, org)
