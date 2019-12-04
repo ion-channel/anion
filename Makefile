@@ -49,11 +49,11 @@ help:  ## Show This Help
 
 .PHONY: install
 install: ## Install dependencies
-	yarn install
+	npm install
 
 .PHONY: linters
 linters: ## Run all linters
-	yarn run eslint lib/**
+	npx eslint lib/**
 
 .PHONY: logs
 logs:  ## Capture logs for services
@@ -94,8 +94,8 @@ test: unit_test integration_test ## Run all tests available
 
 .PHONY: unit_test
 unit_test:  ## Run unit tests
-	@yarn run jest --config=jest.unit.config.js
+	@npx jest --config=jest.unit.config.js
 
 .PHONY: integration_test
 integration_test:  ## Run integration tests
-	@yarn run jest --config=jest.integration.config.js
+	@npx jest --config=jest.integration.config.js
