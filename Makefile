@@ -61,6 +61,10 @@ logs:  ## Capture logs for services
 	@docker ps -a > "serverLogs/docker.txt"
 	@for server in $$(docker ps -a --format '{{.Names}}'); do docker logs "$$server" > "serverLogs/$$server.txt"; done
 
+.PHONY: pretty
+pretty: ## checks that all js files are formatted
+	npx prettier -c "src/**/*.js"
+
 .PHONY: run
 run: tag_image ## Run a dockerized version of the app
 	docker-compose up -d
