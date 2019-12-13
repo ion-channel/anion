@@ -12,12 +12,12 @@ notifications:
 
 jobs:
   include:
-    - stage: Linting
+    - stage: Linting & Formatting
       name: Linting
       install:
         - make install
       script:
-        - make linters
+        - make linters pretty
 
     - stage: Tests
       name: Unit Tests

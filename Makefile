@@ -63,7 +63,7 @@ logs:  ## Capture logs for services
 
 .PHONY: pretty
 pretty: ## checks that all js files are formatted
-	npx prettier -c "src/**/*.js"
+	npx prettier -c "lib/**/*.js"
 
 .PHONY: run
 run: tag_image ## Run a dockerized version of the app
