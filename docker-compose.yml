@@ -28,7 +28,7 @@ services:
 
   # Start Janice
   janice:
-    image: ionchannel/janice
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/janice:latest
     env_file: ./ext/services/janice_env.test
     networks:
       - database_network
@@ -46,7 +46,7 @@ services:
 
   # Start Sweetums
   sweetums:
-    image: ionchannel/sweetums
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/sweetums:latest
     ports:
       - 4000:4000
     networks:
@@ -59,7 +59,7 @@ services:
 
   # Start Waldorf
   waldorf:
-    image: ionchannel/waldorf
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/waldorf:latest
     env_file: ./ext/services/waldorf_env.test
     networks:
       - database_network
@@ -75,7 +75,7 @@ services:
 
   # Start Yolanda
   yolanda:
-    image: ionchannel/yolanda
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/yolanda:latest
     env_file: ./ext/services/yolanda_env.test
     networks:
       database_network: {}
@@ -93,7 +93,7 @@ services:
 
   # Start Animal
   animal:
-    image: ionchannel/animal
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/animal:latest
     env_file: ./ext/services/animal_env.test
     networks:
       database_network: {}
@@ -111,7 +111,7 @@ services:
 
   # Start Kermit
   kermit:
-    image: ionchannel/kermit
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/kermit:latest
     env_file: ./ext/services/kermit_env.test
     networks:
       - database_network
@@ -130,7 +130,7 @@ services:
 
   # Start Statler
   statler:
-    image: ionchannel/statler
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/statler:latest
     env_file: ./ext/services/statler_env.test
     networks:
       services_network:
@@ -153,7 +153,7 @@ services:
 
   # Start Bunsen
   bunsen:
-    image: ionchannel/bunsen
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/bunsen:latest
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
@@ -172,7 +172,7 @@ services:
 
   # Start ElasticMQ
   elasticmq:
-    image: ionchannel/elasticmq
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/elasticmq:latest
     networks:
       - services_network
 
