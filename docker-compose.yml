@@ -47,6 +47,7 @@ services:
   # Start Sweetums
   sweetums:
     image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/sweetums:latest
+    env_file: ./ext/services/sweetums_env.test
     ports:
       - 4000:4000
     networks:
