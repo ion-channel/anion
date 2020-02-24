@@ -14,7 +14,9 @@ services:
 
   # Start DB
   postgres:
-    image: ionchannel/testdb:latest
+    image: testdb
+    build:
+      context: ./ext/db
     ports:
       - 5432:5432
     networks:
