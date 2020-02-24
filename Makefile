@@ -7,7 +7,9 @@ INFO_COLOR := \033[0;36m
 APP := $(shell basename $(PWD) | tr '[:upper:]' '[:lower:]')
 DATE := $(shell date -u +%Y-%m-%d%Z%H:%M:%S)
 
-DOCKER_REPO ?= 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel
+DOCKER_REPO_ACCOUNT ?= 988006926515
+DOCKER_REPO_REGION ?= us-east-1
+DOCKER_REPO ?= $(DOCKER_REPO_ACCOUNT).dkr.ecr.$(DOCKER_REPO_REGION).amazonaws.com/ionchannel
 DOCKER_IMAGE_NAME ?= $(APP)
 DOCKER_IMAGE_LABEL ?= latest
 NODE_IMAGE ?= node
@@ -41,7 +43,7 @@ deploy: ## Deploy the projects
 
 .PHONY: ecr_login
 ecr_login:  ## Login to the ECR using local credentials
-	@eval $$(aws ecr get-login --region us-east-1 --no-include-email)
+	@eval $$(aws ecr get-login --registry-ids $(DOCKER_REPO_ACCOUNT) --region $(DOCKER_REPO_REGION) --no-include-email)
 
 .PHONY: help
 help:  ## Show This Help
@@ -73,24 +75,24 @@ run: tag_image ## Run a dockerized version of the app
 
 .PHONY: tag_image
 tag_image: ecr_login ## Builds the image and tags it
-	docker pull $(DOCKER_REPO)/animal:release
-	docker tag $(DOCKER_REPO)/animal:release ionchannel/animal
-	docker pull $(DOCKER_REPO)/bunsen:release
-	docker tag $(DOCKER_REPO)/bunsen:release ionchannel/bunsen
-	docker pull $(DOCKER_REPO)/janice:release
-	docker tag $(DOCKER_REPO)/janice:release ionchannel/janice
-	docker pull $(DOCKER_REPO)/kermit:release
-	docker tag $(DOCKER_REPO)/kermit:release ionchannel/kermit
-	docker pull $(DOCKER_REPO)/statler:release
-	docker tag $(DOCKER_REPO)/statler:release ionchannel/statler
-	docker pull $(DOCKER_REPO)/waldorf:release
-	docker tag $(DOCKER_REPO)/waldorf:release ionchannel/waldorf
-	docker pull $(DOCKER_REPO)/yolanda:release
-	docker tag $(DOCKER_REPO)/yolanda:release ionchannel/yolanda
-	docker pull $(DOCKER_REPO)/sweetums
-	docker tag $(DOCKER_REPO)/sweetums ionchannel/sweetums
-	docker pull $(DOCKER_REPO)/elasticmq
-	docker tag $(DOCKER_REPO)/elasticmq ionchannel/elasticmq
+	docker pull $(DOCKER_REPO)/animal:latest
+	docker tag $(DOCKER_REPO)/animal:latest ionchannel/animal
+	docker pull $(DOCKER_REPO)/bunsen:latest
+	docker tag $(DOCKER_REPO)/bunsen:latest ionchannel/bunsen
+	docker pull $(DOCKER_REPO)/janice:latest
+	docker tag $(DOCKER_REPO)/janice:latest ionchannel/janice
+	docker pull $(DOCKER_REPO)/kermit:latest
+	docker tag $(DOCKER_REPO)/kermit:latest ionchannel/kermit
+	docker pull $(DOCKER_REPO)/statler:latest
+	docker tag $(DOCKER_REPO)/statler:latest ionchannel/statler
+	docker pull $(DOCKER_REPO)/waldorf:latest
+	docker tag $(DOCKER_REPO)/waldorf:latest ionchannel/waldorf
+	docker pull $(DOCKER_REPO)/yolanda:latest
+	docker tag $(DOCKER_REPO)/yolanda:latest ionchannel/yolanda
+	docker pull $(DOCKER_REPO)/sweetums:latest
+	docker tag $(DOCKER_REPO)/sweetums:latest ionchannel/sweetums
+	docker pull $(DOCKER_REPO)/elasticmq:latest
+	docker tag $(DOCKER_REPO)/elasticmq:latest ionchannel/elasticmq
 	docker build -t ionchannel/testdb ./ext/db
 
 .PHONY: test
