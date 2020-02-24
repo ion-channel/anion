@@ -171,6 +171,25 @@ services:
       postgres:
         condition: service_healthy
 
+  # Start Rosita
+  rosita:
+    image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/rosita:latest
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+    env_file: ./ext/services/rosita_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "/probe", "-kv", "http://localhost:4567/v1/status"]
+      interval: 8s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   # Start ElasticMQ
   elasticmq:
     image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/elasticmq:latest
