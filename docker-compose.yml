@@ -1,7 +1,7 @@
 version: '2.3'
 
 services:
-# Start API Proxy
+  # Start API Proxy
   api:
     image: avenues
     build:
@@ -12,7 +12,7 @@ services:
       - exposed_network
       - services_network
 
-# Start DB
+  # Start DB
   postgres:
     image: ionchannel/testdb:latest
     ports:
@@ -26,7 +26,7 @@ services:
       retries: 10
       start_period: 30s
 
-# Start Janice
+  # Start Janice
   janice:
     image: ionchannel/janice
     env_file: ./ext/services/janice_env.test
@@ -44,7 +44,7 @@ services:
       waldorf:
         condition: service_started
 
-# Start Sweetums
+  # Start Sweetums
   sweetums:
     image: ionchannel/sweetums
     ports:
@@ -57,7 +57,7 @@ services:
       timeout: 30s
       retries: 5
 
-# Start Waldorf
+  # Start Waldorf
   waldorf:
     image: ionchannel/waldorf
     env_file: ./ext/services/waldorf_env.test
@@ -73,7 +73,7 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Yolanda
+  # Start Yolanda
   yolanda:
     image: ionchannel/yolanda
     env_file: ./ext/services/yolanda_env.test
@@ -91,7 +91,7 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Animal
+  # Start Animal
   animal:
     image: ionchannel/animal
     env_file: ./ext/services/animal_env.test
@@ -109,7 +109,7 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Kermit
+  # Start Kermit
   kermit:
     image: ionchannel/kermit
     env_file: ./ext/services/kermit_env.test
@@ -128,7 +128,7 @@ services:
         condition: service_started
 
 
-# Start Statler
+  # Start Statler
   statler:
     image: ionchannel/statler
     env_file: ./ext/services/statler_env.test
@@ -151,7 +151,7 @@ services:
       yolanda:
         condition: service_healthy
 
-# Start Bunsen
+  # Start Bunsen
   bunsen:
     image: ionchannel/bunsen
     environment:
@@ -169,6 +169,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+
+  # Start ElasticMQ
   elasticmq:
     image: ionchannel/elasticmq
     networks:
