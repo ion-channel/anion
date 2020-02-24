@@ -40,7 +40,7 @@ ALTER TABLE ONLY analyses ADD CONSTRAINT analyses_pkey PRIMARY KEY (id);
 CREATE INDEX index_analyses_on_id_and_team_id_and_project_id ON analyses USING btree (id, team_id, project_id);
 
 --
--- Name: scans; Type: TABLE; Schema: public; Owner: postgres
+-- scans
 --
 
 CREATE TABLE scans (
