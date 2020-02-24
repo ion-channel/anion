@@ -136,6 +136,7 @@ services:
     image: 988006926515.dkr.ecr.us-east-1.amazonaws.com/ionchannel/statler:latest
     env_file: ./ext/services/statler_env.test
     networks:
+      database_network: {}
       services_network:
         aliases:
           - statler.ionchannel.testing
