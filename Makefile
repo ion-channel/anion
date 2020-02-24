@@ -7,11 +7,6 @@ INFO_COLOR := \033[0;36m
 APP := $(shell basename $(PWD) | tr '[:upper:]' '[:lower:]')
 DATE := $(shell date -u +%Y-%m-%d%Z%H:%M:%S)
 
-DOCKER_REPO ?= 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel
-DOCKER_IMAGE_NAME ?= $(APP)
-DOCKER_IMAGE_LABEL ?= latest
-NODE_IMAGE ?= node
-
 CI_BRANCH ?= $(CIRCLE_BRANCH)
 
 .PHONY: ci_setup
