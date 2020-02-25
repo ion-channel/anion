@@ -13,12 +13,8 @@ CI_BRANCH ?= $(CIRCLE_BRANCH)
 ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
 	@echo "Installing AWS cli"
-	@sudo apt-get -y -qq update
-	@sudo apt-get -y -qq install python3.5-dev
-	@curl -O https://bootstrap.pypa.io/get-pip.py
-	@python3.5 get-pip.py --user
-	@pip install --user awscli
-	@sudo /etc/init.d/postgresql stop
+	@wget -O flow.tar.gz https://github.com/gomicro/flow/releases/download/v0.0.1/flow_0.0.1_linux_amd64.tar.gz
+	@tar xvf flow.tar.gz -C /home/travis/.local/bin
 
 .PHONY: clean
 clean: clean_files  ## Cleanup all running and generated items
@@ -36,7 +32,7 @@ deploy: ## Deploy the projects
 
 .PHONY: ecr_login
 ecr_login:  ## Login to the ECR using local credentials
-	@eval $$(aws ecr get-login --region us-east-1 --no-include-email)
+	@eval $$(flow aws ecr auth)
 
 .PHONY: help
 help:  ## Show This Help
