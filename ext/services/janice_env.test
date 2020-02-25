@@ -15,6 +15,7 @@ JANICE_GX_USERPROFILEURI=http://sweetums:4000/ms_oauth/resources/userprofile/me
 JANICE_GX_AFTERAUTHURI=http://localhost:8001
 JANICE_GX_LOGINURI=http://localhost:4000/ms_oauth/oauth2/endpoints/oauthservice/authorize?client_id=53be2fa9abe847ed9c86f6be942af9d9&response_type=code&redirect_uri=http%3A%2F%2Flocalhost:4567%2Fv1%2Fauth%2Fgx&scope=UserProfile.me
 
+JANICE_SKIPSTAT=true
 JANICE_JWT_SECRET=3B43C7BAAE80498B902593996E21A967
 JANICE_JWT_EXPIRATION=900
 

@@ -1,7 +1,7 @@
 version: '2.3'
 
 services:
-# Start API Proxy
+  # Start API Proxy
   api:
     image: avenues
     build:
@@ -12,9 +12,11 @@ services:
       - exposed_network
       - services_network
 
-# Start DB
+  # Start DB
   postgres:
-    image: ionchannel/testdb:latest
+    image: testdb
+    build:
+      context: ./ext/db
     ports:
       - 5432:5432
     networks:
@@ -26,15 +28,15 @@ services:
       retries: 10
       start_period: 30s
 
-# Start Janice
+  # Start Janice
   janice:
-    image: ionchannel/janice
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/janice:latest
     env_file: ./ext/services/janice_env.test
     networks:
       - database_network
       - services_network
     healthcheck:
-      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:4567/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5
@@ -44,28 +46,29 @@ services:
       waldorf:
         condition: service_started
 
-# Start Sweetums
+  # Start Sweetums
   sweetums:
-    image: ionchannel/sweetums
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/sweetums:latest
+    env_file: ./ext/services/sweetums_env.test
     ports:
       - 4000:4000
     networks:
       - services_network
     healthcheck:
-      test: ["CMD", "/probe", "-kv", "http://localhost:4000/v1/status"]
+      test: ["CMD", "/probe", "-kv", "https://localhost:4000/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5
 
-# Start Waldorf
+  # Start Waldorf
   waldorf:
-    image: ionchannel/waldorf
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/waldorf:latest
     env_file: ./ext/services/waldorf_env.test
     networks:
       - database_network
       - services_network
     healthcheck:
-      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:4567/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5
@@ -73,9 +76,9 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Yolanda
+  # Start Yolanda
   yolanda:
-    image: ionchannel/yolanda
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/yolanda:latest
     env_file: ./ext/services/yolanda_env.test
     networks:
       database_network: {}
@@ -91,9 +94,9 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Animal
+  # Start Animal
   animal:
-    image: ionchannel/animal
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/animal:latest
     env_file: ./ext/services/animal_env.test
     networks:
       database_network: {}
@@ -109,15 +112,15 @@ services:
       postgres:
         condition: service_healthy
 
-# Start Kermit
+  # Start Kermit
   kermit:
-    image: ionchannel/kermit
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/kermit:latest
     env_file: ./ext/services/kermit_env.test
     networks:
       - database_network
       - services_network
     healthcheck:
-      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:4567/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5
@@ -128,11 +131,12 @@ services:
         condition: service_started
 
 
-# Start Statler
+  # Start Statler
   statler:
-    image: ionchannel/statler
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/statler:latest
     env_file: ./ext/services/statler_env.test
     networks:
+      database_network: {}
       services_network:
         aliases:
           - statler.ionchannel.testing
@@ -151,9 +155,9 @@ services:
       yolanda:
         condition: service_healthy
 
-# Start Bunsen
+  # Start Bunsen
   bunsen:
-    image: ionchannel/bunsen
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/bunsen:latest
     environment:
       - AWS_ACCESS_KEY_ID
       - AWS_SECRET_ACCESS_KEY
@@ -162,15 +166,36 @@ services:
       - database_network
       - services_network
     healthcheck:
-      test: ["CMD", "curl", "-k", "http://localhost:4567/v1/status"]
+      test: ["CMD", "curl", "-k", "-f", "http://localhost:4567/v1/status"]
       interval: 8s
       timeout: 30s
       retries: 5
     depends_on:
       postgres:
         condition: service_healthy
+
+  # Start Rosita
+  rosita:
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/rosita:latest
+    environment:
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+    env_file: ./ext/services/rosita_env.test
+    networks:
+      - database_network
+      - services_network
+    healthcheck:
+      test: ["CMD", "/probe", "-kv", "http://localhost:4567/v1/status"]
+      interval: 8s
+      timeout: 30s
+      retries: 5
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Start ElasticMQ
   elasticmq:
-    image: ionchannel/elasticmq
+    image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/elasticmq:latest
     networks:
       - services_network
 

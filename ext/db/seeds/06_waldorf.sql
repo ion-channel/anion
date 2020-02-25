@@ -41,7 +41,8 @@ CREATE TABLE rules (
     policy_url character varying,
     remediation_url character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deprecated boolean
 );
 
 ALTER TABLE rules OWNER TO postgres;
@@ -92,7 +93,7 @@ CREATE INDEX index_rulesets_rules_on_ruleset_id_and_rule_id ON rulesets_rules US
 COPY rule_evaluations (project_id, team_id, analysis_id, rule_evaluation_summary, rule_eval_created_at, created_at, updated_at)
 FROM '/docker-entrypoint-initdb.d/evaluations.csv' WITH DELIMITER AS ';' ESCAPE '/' CSV HEADER;
 
-COPY rules (id, scan_type, name, description, category, policy_url, remediation_url, created_at, updated_at)
+COPY rules (id, scan_type, name, description, category, policy_url, remediation_url, created_at, updated_at, deprecated)
 FROM '/docker-entrypoint-initdb.d/rules.csv' WITH DELIMITER AS ',' CSV HEADER;
 
 COPY rulesets (id, team_id, name, description, rule_ids, created_at, updated_at)

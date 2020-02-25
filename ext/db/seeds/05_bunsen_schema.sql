@@ -1,44 +1,4 @@
-CREATE DATABASE bunsen WITH TEMPLATE = template0 OWNER = postgres;
-
 \connect bunsen
-
-SET default_transaction_read_only = off;
-CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
-COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
-SET search_path = public, pg_catalog;
-
---
--- Functions
---
-
-CREATE FUNCTION update_cv_pointers() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-      BEGIN
-          with latest_versions as (
-            select max(modified_at) as mod
-              from vulnerability_versions
-             where external_id = NEW.external_id
-          )
-          insert into current_vulnerabilities
-            (vulnerability_version_id, external_id, created_at, updated_at)
-          select vv.id, vv.external_id,
-            now() at time zone 'utc',
-            now() at time zone 'utc'
-          from latest_versions lv
-          join vulnerability_versions vv
-            on vv.modified_at = lv.mod
-         where vv.external_id = NEW.external_id
-          on conflict (external_id) do
-           update set vulnerability_version_id = excluded.vulnerability_version_id,
-            updated_at = now() at time zone 'utc'
-          ;
-          RETURN NEW;
-      END;
-      $$;
-
-ALTER FUNCTION public.update_cv_pointers() OWNER TO postgres;
-
 
 --
 -- bunsen_nvd_versions
@@ -128,7 +88,8 @@ CREATE TABLE dependencies (
     target_hw character varying,
     target_sw character varying,
     sw_edition character varying,
-    other character varying
+    other character varying,
+    text_search_vector tsvector
 );
 
 ALTER TABLE dependencies OWNER TO postgres;
@@ -138,6 +99,37 @@ CREATE INDEX dependencies_name_version_ix ON dependencies USING btree (name, ver
 CREATE INDEX dependencies_org_name_version_ix ON dependencies USING btree (org, name, version);
 CREATE UNIQUE INDEX dependencies_unique ON dependencies USING btree (org, name, version, up, edition, part, language, target_hw, target_sw, sw_edition, other);
 CREATE UNIQUE INDEX index_dependencies_on_external_id ON dependencies USING btree (external_id);
+
+CREATE FUNCTION dep_textsearch_document(IN d dependencies) RETURNS tsvector
+	AS $BODY$
+DECLARE
+    variable_vector tsvector;
+BEGIN
+    variable_vector = setweight(ts_delete(ts_delete(to_tsvector('simple', concat_ws(' ', d.name, regexp_replace(d.version, '[a-zA-Z]','','g'))), d.name), regexp_replace(d.version, '[a-zA-Z]','','g')), 'D');
+
+    RETURN  setweight(to_tsvector('simple', regexp_replace(d.name, '[\\W]', ' ')), 'A') ||
+    setweight(to_tsvector('simple', coalesce(regexp_replace(d.version, '[\.]','','g'), ' ')), 'B') ||
+    setweight(to_tsvector('simple', concat_ws(' ', d.org, d.references)), 'C') ||
+    variable_vector;
+END;
+$BODY$
+	LANGUAGE plpgsql
+	COST 100
+	CALLED ON NULL INPUT
+	SECURITY INVOKER
+	VOLATILE;
+ALTER FUNCTION dep_textsearch_document(IN d dependencies) OWNER TO postgres;
+
+CREATE FUNCTION dep_textsearch_document_trigger() RETURNS TRIGGER AS $$
+BEGIN
+	 NEW.text_search_vector := dep_textsearch_document(NEW);
+	 RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER dep_textsearch_update_trigger BEFORE UPDATE ON dependencies FOR EACH ROW EXECUTE PROCEDURE dep_textsearch_document_trigger();
+CREATE TRIGGER dep_textsearch_insert_trigger BEFORE INSERT ON dependencies FOR EACH ROW EXECUTE PROCEDURE dep_textsearch_document_trigger();
+CREATE INDEX dep_text_search_vector_idx ON dependencies USING GIN (text_search_vector);
 
 --
 -- dependencies_id_seq
@@ -459,3 +451,5 @@ COPY vulnerability_versions (id, external_id, title, summary, score, vector, acc
 \.
 
 SELECT pg_catalog.setval('vulnerability_versions_id_seq', 9, true);
+
+ANALYZE;
