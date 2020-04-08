@@ -196,6 +196,8 @@ services:
   # Start ElasticMQ
   elasticmq:
     image: 313220119457.dkr.ecr.us-east-1.amazonaws.com/ionchannel/elasticmq:latest
+    volumes:
+      - ./ext/services/elasticmq.conf:/elasticmq/custom.conf
     networks:
       - services_network
 
