@@ -14,6 +14,7 @@ ci_setup: ## Setup the ci environment
 	@if [[ -n "$$BUILD_ENV" ]] && [[ "$$BUILD_ENV" == "testing" ]]; then echo -e "$(INFO_COLOR)THIS IS EXECUTING AGAINST THE TESTING ENVIRONMEMNT$(NO_COLOR)"; fi
 	@echo "Installing AWS cli"
 	@wget -O flow.tar.gz https://github.com/gomicro/flow/releases/download/v0.0.1/flow_0.0.1_linux_amd64.tar.gz
+	@mkdir -p /home/travis/.local/bin
 	@tar xvf flow.tar.gz -C /home/travis/.local/bin
 
 .PHONY: clean
