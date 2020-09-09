@@ -70,6 +70,10 @@ test: unit_test integration_test ## Run all tests available
 unit_test:  ## Run unit tests
 	@npx jest --config=jest.unit.config.js
 
+.PHONY: watch_unit_test
+watch_unit_test:  ## Run unit tests
+	@npx jest --config=jest.unit.config.js --watch
+
 .PHONY: integration_test
 integration_test:  ## Run integration tests
 	@npx jest --config=jest.integration.config.js
