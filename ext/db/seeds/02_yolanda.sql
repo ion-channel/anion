@@ -6,6 +6,20 @@ SET default_transaction_read_only = off;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
 COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
 
+-- Ruleset change history
+
+CREATE TABLE projects_ruleset_history (
+    project_id uuid NOT NULL,
+    ruleset_id uuid NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    user_id uuid NOT NULL
+);
+
+ALTER TABLE projects_ruleset_history OWNER TO postgres;
+CREATE UNIQUE INDEX index_projects_ruleset_history_on_projectid_rulsetid_createdat ON projects_ruleset_history USING btree (project_id, ruleset_id, created_at);
+ALTER TABLE projects_ruleset_history ADD COLUMN IF NOT EXISTS ruleset_id_changed_from uuid;
+ALTER TABLE projects_ruleset_history RENAME COLUMN ruleset_id TO ruleset_id_changed_to;
+
 ---
 --- projects
 ---
@@ -101,8 +115,6 @@ ALTER TABLE projects_tags OWNER TO postgres;
 ALTER TABLE ONLY projects_tags ADD CONSTRAINT portfolios_projects_pkey PRIMARY KEY (id);
 CREATE INDEX index_projects_tags_on_project_id ON projects_tags USING btree (project_id);
 CREATE INDEX index_projects_tags_on_tag_id ON projects_tags USING btree (tag_id);
-
-
 
 ---
 --- Data
