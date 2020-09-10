@@ -120,7 +120,7 @@ services:
       - database_network
       - services_network
     healthcheck:
-      test: ["CMD", "curl", "-k", "-f", "http://localhost:4567/v1/status"]
+      test: ["CMD", "/probe", "-kv", "http://localhost:4567/v1/status"]
       interval: 5s
       timeout: 30s
       retries: 5
