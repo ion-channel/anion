@@ -100,7 +100,8 @@ CREATE TABLE users (
     last_active_at timestamp without time zone DEFAULT '2018-05-31 16:59:23.50034'::timestamp without time zone,
     email_hash character varying DEFAULT ''::character varying NOT NULL,
     externally_managed boolean DEFAULT false,
-    system boolean DEFAULT false
+    system boolean DEFAULT false,
+    status text
 );
 
 ALTER TABLE users OWNER TO postgres;
