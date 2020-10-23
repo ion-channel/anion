@@ -19,7 +19,8 @@ CREATE TABLE analysis_statuses (
     message text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    branch character varying DEFAULT 'master'::character varying NOT NULL
+    branch character varying DEFAULT 'master'::character varying NOT NULL,
+    unreachable_error boolean DEFAULT false
 );
 
 
