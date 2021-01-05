@@ -16,7 +16,7 @@
   "author": "Ion Channel Dev <dev@ionchannel.io>",
   "license": "Apache-2.0",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "js-cookie": "^2.2.1",
     "tcomb": "^3.2.29"
   },
