@@ -118,7 +118,7 @@
     - returns: Promise
       - data: object
         - analysis: `Analysis`
-      - example: look at line 306 in [test file](./reports/reports.test.js)
+      - example: [test file](./reports.test.js#L306)
     - example:
     ```javascript
     Reports.getAnalysis({
@@ -147,7 +147,7 @@
       - data: object
         - data: object
           - `Digests`
-      - [example](./reports/reports.test.js) line 49
+      - [example](./reports.test.js#L49)
     - example:
     ```javascript
     Reports.getDigests({
@@ -178,7 +178,7 @@
       - teamId
         - type: string
         - description: id of the team that the project belongs to
-    - returns: Promise, see [example](./reports/reports.test.js) line 852
+    - returns: Promise, see [example](./reports.test.js#L852)
     - example:
     ```javascript
     Reports.getProject({
@@ -196,7 +196,7 @@
     - returns: Promise
       - projects: array of `Projects`
       - meta: `Meta`
-      - [example](./reports/reports.test.js) line 916
+      - [example](./reports.test.js#L916)
     - example: `Reports.getProjects({ teamId: 'bestteam' })`
 
   - `getPortfolio`
@@ -211,7 +211,7 @@
         - project_status_summaries: array of `PortfolioSummary`
         - project_summaries: array of `PortfolioSummary`
         - vulnerability_summaries: array of `PortfolioSummary`
-      - [example](./reports/repots.test.js) line 35374
+      - [example](./reports/repots.test.js#L35374
     - example: `Reports.getPortfolio({ teamId: 'bestteam' })`
   - `getVulnerabilityList`
     - description: fetches a list of vulnerabilities that are on any of the projects that belong to a team
@@ -222,7 +222,7 @@
     - returns: Promise
       - object
         - cve_list: array of `Vulnerability`
-      - [example](./reports/reports.test.js) line 35828
+      - [example](./reports.test.js#L35828)
     - example: `Reports.getVulnerabilityList({ teamId: 'bestteam' })`
   - `getAffectedProjects`
     - description: fetches a list of projects that are have a given vulnerability
@@ -233,7 +233,7 @@
       - externalId
         - type: string
         - description: the id of a vulnerability. This should be an id from a vulnerability in the response from `getVulnerabilityList` otherwise you might get back an empty array
-      - [example](./reports/reports.test.js) line 35889
+      - [example](./reports.test.js#L35889)
     - returns: Promise that resolves to an array of `AffectedProject`
     - example
     ```javascript
@@ -262,7 +262,7 @@
         - type: string
         - description: the id of the project that you want to see the history from
     - returns: Promise that resovles to an array of `ProjectStatus`
-      - [example](./reports/reports.test.js) line 34488
+      - [example](./reports.test.js#L34488)
     - example: `Reports.getProjectHistory({ teamId: '646fa3e5', projectId: '03b5660f' })`
   - `getExportedData`
     - description: fetches a snapshot of data around a list of projects
@@ -278,7 +278,7 @@
         - data: object
           - created_at: string
           - projects: list of `ProjectReport`
-      - [example](./reports/reports.test.js) line 34571
+      - [example](./reports.test.js#L34571)
     - example: `Reports.getExportedData({ teamId: 'someid', ids: ['abc'] })`
   - `getProjectsByDependency`
     - description: fetches the projects that have the given dependency
@@ -303,7 +303,7 @@
         - version: string,
         - project_ids: an array of strings
       - meta: `Meta`
-        [example](./reports/reports.test.js) line 34618
+        [example](./reports.test.js#L34618)
     - example:
     ```javascript
     Reports.getProjectsByDependency({

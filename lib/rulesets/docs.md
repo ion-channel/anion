@@ -45,7 +45,7 @@
         - description: the id of the analysis
     - returns: Promise
       - `AppliedRulesetSummary`
-      - example: look at line 15 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L15)
     - example:
     ```javascript
     Rulesets.getAppliedRuleSet({
@@ -86,7 +86,7 @@
         - project_id: string
         - team_id: string
       - meta: `Meta`
-      - example: look at line 70 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L70)
     - example: `Rulesets.getProjectHistory({ projectId: 'abc' })`
   - `getRuleset`
     - description: fetches the data for a ruleset that exists for a team
@@ -100,7 +100,7 @@
     - returns: Promise
       - data: `Ruleset`
       - meta: `Meta`
-      - example: look at line 42 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L42)
     - example: `Rulesets.getRuleset({ id: 'abc', teamId: '123' })`
   - `getPublicRuleset`
     - description: same as `getRulset` but on a public team
@@ -120,14 +120,14 @@
         - description: the id of the team that owns the rulesets
     - returns: Promise
       - data: array of `Ruleset`
-      - example: look at line 144 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L144)
     - example: `Rulesets.getRulesets({ teamId: 'abc' })`
   - `getRules`
     - description: fetches the rules that could be set to a ruleset
     - parameters: none
     - returns: Promise
       - data: array of `Rules`
-      - example: look at line 187 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L187)
     - example: `Rulesets.getRules()`
   - `createRuleset`
     - description: create a new ruleset
@@ -146,7 +146,7 @@
         - description: the desired list of selected ids of rulesets, defined from `getRules`
     - returns: Promise
       - data: `Ruleset`
-      - example: look at line 306 in [test file](./rulesets/ruleset.test.js)
+      - example: [test file](./ruleset.test.js#L306)
     - example: `Rulesets.createRuleset({ description: '', name: 'ruleset abc', ruleIds: ['f746023f'], teamId: '646fa3e5')`
   - `deleteRuleset`
     - description: soft delete a ruleset
