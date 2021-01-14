@@ -1,0 +1,162 @@
+# Rulesets
+
+- types
+
+  - `AppliedRulesetSummary`: object
+    - project_id: string,
+    - team_id: string,
+    - analysis_id: string,
+    - rule_evaluation_summary: any,
+    - created_at: string,
+    - updated_at: string,
+  - `Ruleset`
+    - created_at: string
+    - description: string
+    - has_deprecated_rules: boolean
+    - has_projects_assigned: boolean
+    - id: string
+    - name: string
+    - rule_ids: array of strings
+    - rules: array of `Rule`
+    - team_id: string
+    - updated_at: string
+  - `Rule`
+    - category: string
+    - created_at: string
+    - deprecated: boolean
+    - description: string
+    - id: string
+    - name: string
+    - scan_type: string
+    - updated_at: string
+
+- methods
+  - `getAppliedRuleSet`
+    - description: fetches the result of a ruleset that was applied in an analysis of a project
+    - parameters:
+      - projectId
+        - type: string
+        - description: the id of the project that the analysis was ran on
+      - teamId
+        - type: string
+        - description: the id of the team that owns the project
+      - analysisId
+        - type: string
+        - description: the id of the analysis
+    - returns: Promise
+      - `AppliedRulesetSummary`
+      - example: [test file](./ruleset.test.js#L15)
+    - example:
+    ```javascript
+    Rulesets.getAppliedRuleSet({
+      analysisId: 'abc',
+      projectId: 'foo',
+      teamId: '123',
+    })
+    ```
+  - `getAppliedRuleSetForPublicProject`
+    - description: same sort of request as `getAppliedRuleset` but on a public project
+    - parameters:
+      - projectId
+        - type: string
+        - description: the id of the public project
+      - analysisId
+        - type: string
+        - description: the id of the public analysis
+    - returns: Promise
+      - `AppliedRulesetSummary`
+    - example:
+  - `getProjectHistory`
+    - description: fetches the analysis history of a project.
+    - parameters:
+      - projectId
+        - type: string
+        - description: the id of the project
+      - from
+        - type: string, optional
+        - description: the date at which you want to see the start of the project history results
+      - to
+        - type: string, optional
+        - description: the date you want to limit the history results
+    - returns: Promise
+      - data: an array of objects
+        - analysis_id: string
+        - created_at: string
+        - pass: false,
+        - project_id: string
+        - team_id: string
+      - meta: `Meta`
+      - example: [test file](./ruleset.test.js#L70)
+    - example: `Rulesets.getProjectHistory({ projectId: 'abc' })`
+  - `getRuleset`
+    - description: fetches the data for a ruleset that exists for a team
+    - parameters:
+      - id
+        - type: string
+        - description: the id of the ruleset
+      - teamId
+        - type: string
+        - description: the id of the team that has created the ruleset
+    - returns: Promise
+      - data: `Ruleset`
+      - meta: `Meta`
+      - example: [test file](./ruleset.test.js#L42)
+    - example: `Rulesets.getRuleset({ id: 'abc', teamId: '123' })`
+  - `getPublicRuleset`
+    - description: same as `getRulset` but on a public team
+    - parameter: object
+      - id
+        - type: string
+        - description: the id of the public analysis
+    - returns: Promise
+      - data: `Ruleset`
+      - meta: `Meta`
+    - example: `Reports.getPublicRuleset({id: 'abc'})`
+  - `getRulesets`
+    - description: fetches the rulesets that were created for a team
+    - parameters:
+      - teamId
+        - type: string
+        - description: the id of the team that owns the rulesets
+    - returns: Promise
+      - data: array of `Ruleset`
+      - example: [test file](./ruleset.test.js#L144)
+    - example: `Rulesets.getRulesets({ teamId: 'abc' })`
+  - `getRules`
+    - description: fetches the rules that could be set to a ruleset
+    - parameters: none
+    - returns: Promise
+      - data: array of `Rules`
+      - example: [test file](./ruleset.test.js#L187)
+    - example: `Rulesets.getRules()`
+  - `createRuleset`
+    - description: create a new ruleset
+    - parameter: object
+      - teamId
+        - type: string
+        - description: the id of the team the ruleset will exist on
+      - name
+        - type: string
+        - description: the ruleset name
+      - description
+        - type: string, optional
+        - description: the description of the ruleset
+      - ruleIds
+        - type: array of strings
+        - description: the desired list of selected ids of rulesets, defined from `getRules`
+    - returns: Promise
+      - data: `Ruleset`
+      - example: [test file](./ruleset.test.js#L306)
+    - example: `Rulesets.createRuleset({ description: '', name: 'ruleset abc', ruleIds: ['f746023f'], teamId: '646fa3e5')`
+  - `deleteRuleset`
+    - description: soft delete a ruleset
+    - parameters: object
+      - rulesetId
+        - type: string
+        - description: id of the ruleset to be deleted
+      - teamId
+        - type: string
+        - description: id of the team that owns the ruleset
+    - returns: Promise
+      - data: null
+    - example: `Rulesets.createRuleset({ rulesetId: '14229edc', teamId: '646fa3e5'})`

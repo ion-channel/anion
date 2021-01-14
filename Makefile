@@ -77,3 +77,7 @@ watch_unit_test:  ## Run unit tests
 .PHONY: integration_test
 integration_test:  ## Run integration tests
 	@npx jest --config=jest.integration.config.js
+
+.PHONY: publish
+publish:  ## publish to npm (you should have ran `npm version [patch, minor, major]` before this runs)
+	npm publish --access public
