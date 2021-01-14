@@ -1,6 +1,6 @@
 {
   "name": "anion-sdk",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Node SDK for the Ion Channel API",
   "main": "anion.js",
   "private": false,
