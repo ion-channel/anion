@@ -6,7 +6,7 @@
     - user: object
       - chat_handle: ""
       - created_at: "2019-01-18T22:05:52.134444Z"
-      - email: "mike.swain@ionchannel.io"
+      - email: "mike@youmail.io"
       - externally_managed: false
       - id: "72703033-e379-4b9b-9fb1-fb41467b80bf"
       - last_active_at: "2021-01-13T17:52:33.588393Z"

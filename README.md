@@ -64,7 +64,7 @@ Both cases will yield the same result.
 
 ## API
 
-[view the api documentation](https://github.com/ion-channel/anion/api.md)
+[view the api documentation](https://github.com/ion-channel/anion/blob/master/api.md)
 
 ## Suggested workflow for new users
 
