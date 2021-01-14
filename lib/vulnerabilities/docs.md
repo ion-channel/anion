@@ -29,7 +29,7 @@
         - description: the id of the vulnerability
     - returns: Promise
       - data: `Vulnerability`
-      - example: look at line 128 in [test file](lib/vulnerabilities/vulnerabilities.tesjs)
+      - example: look at line 128 in [test file](./vulnerabilities/vulnerabilities.tesjs)
     - example: `Vulnerabilities.getVulnerability('somevulnid')`
 
   - `getVulnerabilities`
@@ -50,7 +50,7 @@
         - description: for pagination, default value is 10, how many possible records you want to get back
     - returns: Promise
       - data: an array of `Vulnerability`
-      - example: look at line 159 in [test file](lib/vulnerabilities/vulnerabilities.tesjs)
+      - example: look at line 159 in [test file](./vulnerabilities/vulnerabilities.tesjs)
     - example: `Vulnerabilities.getVulnerabilities('jdk', '1.0.0')`
 
   - `getProduct`
@@ -62,5 +62,5 @@
         - description: the id of the product
     - returns: Promise
       - data: `Product`
-      - example: look at line 172 in [test file](lib/vulnerabilities/vulnerabilities.tesjs)
+      - example: look at line 172 in [test file](./vulnerabilities/vulnerabilities.tesjs)
     - example: `Vulnerabilities.getProduct({ externalId: 'ruby' })`

@@ -22,7 +22,7 @@
         - description: default value is true
     - returns: Promise
       - data: string
-      - example: look at line 76 in [test file](lib/tokesn/tokens.test.js)
+      - example: look at line 76 in [test file](./tokesn/tokens.test.js)
     - example: `Tokens.createToken({ name: 'awesometoken' })`
 
   - `getTokens`
@@ -34,7 +34,7 @@
         - description: default value is true
     - returns: Promise
       - data: array of `Token`
-      - example: look at line 59 in [test file](lib/tokesn/tokens.test.js)
+      - example: look at line 59 in [test file](./tokesn/tokens.test.js)
     - example: `Tokens.getTokens({ cli: true })`
 
   - `deleteToken`

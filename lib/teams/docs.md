@@ -42,7 +42,7 @@
         - description: id of the team
     - returns: Promise
       - `Team`
-      - example: look at line 395 in [test file](lib/teams/teams.test.js)
+      - example: look at line 395 in [test file](./teams/teams.test.js)
     - example: `Teams.getTeam({ id: 'cd98e4e1' })`
 
   - `getTeams`
@@ -52,7 +52,7 @@
     - returns: Promise
       - data: list of `UsersTeam`
       - meta: `Meta`
-      - example: look at line 362 in [test file](lib/teams/teams.test.js)
+      - example: look at line 362 in [test file](./teams/teams.test.js)
     - example: `Teams.getTeams()`
 
   - `getTeamUsers`
@@ -64,7 +64,7 @@
         - description: id of the team that has some users
     - returns: Promise
       - an array of `TeamUser`
-      - example: look at line 419 in [test file](lib/teams/teams.test.js)
+      - example: look at line 419 in [test file](./teams/teams.test.js)
     - example: `Teams.getTeamUsers({ teamId: 'someteam' })`
 
   - `acceptInvite`
@@ -79,7 +79,7 @@
         - description: the jwt token that authenticates the user
     - returns: Promise
       - data: an empty object
-      - example: look at line 24 in [test file](lib/teams/teams.test.js)
+      - example: look at line 24 in [test file](./teams/teams.test.js)
     - example: `Teams.acceptInvite({id: 'inviteid', token: 'aninvitetoken'})`
 
   - `getInvite`
@@ -95,7 +95,7 @@
     - returns: Promise
       - data: object
         - team_name: string
-      - example: look at line 44 in [test file](lib/teams/teams.test.js)
+      - example: look at line 44 in [test file](./teams/teams.test.js)
     - example `Teams.getInvite({id: 'inviteid', token: 'aninvitetoken'})`
 
   - `inviteTeamUser`
@@ -116,7 +116,7 @@
         - description: access rights the user will have. Should be one of 'member', 'admin', or 'sys_admin'. System admins can see all of the teams in the system. Admins only have access to the teams they are an admin of. They can see all of the members of a team, and can add or remove team members. Members can only see themselves in a team and cannot perform any actions that an administrator would be able to.
     - returns: Promise
       - data: `TeamUser`
-      - example: look at line 501 in [test file](lib/teams/teams.test.js)
+      - example: look at line 501 in [test file](./teams/teams.test.js)
     - example: `Teams.inviteTeamUser({ teamId: 'someteam', userId: 'someuser', role: 'admin'})`
 
   - `resendInvite`
@@ -129,7 +129,7 @@
     - returns: Promise
       - data: object
         - `TeamUser`
-      - example: look at line 501 in [test file](lib/teams/teams.test.js)
+      - example: look at line 501 in [test file](./teams/teams.test.js)
     - example:
 
   - `deleteTeamUser`
@@ -142,7 +142,7 @@
     - returns: Promise
       - data: object
         - message: string
-      - example: look at line 518 in [test file](lib/teams/teams.test.js)
+      - example: look at line 518 in [test file](./teams/teams.test.js)
     - example: `Teams.deleteTeamUser({ id: 'someteamuserid' })`
 
   - `updateTeam`
@@ -166,7 +166,7 @@
         - description: the default value for the deploy key
     - returns: Promise
       - data: `Team`
-      - example: look at line 306 in [test file](lib/teams/teams.test.js)
+      - example: look at line 306 in [test file](./teams/teams.test.js)
     - example: `Teams.updateTeam({ id: 'cd98e4e1-6926-4989-8ef8-f326cd5956fc', name: 'somenewname', pocName: 'NewGuy', pocEmail: 'newguy@ionchannel.io', defaultDeployKey: 'somekey'})`
 
   - `updateTeamUser`
@@ -185,7 +185,7 @@
     - returns: Promise
       - data: `TeamUser`
       - meta: `Meta`
-      - example: look at line 184 in [test file](lib/teams/teams.test.js)
+      - example: look at line 184 in [test file](./teams/teams.test.js)
 
   - `createTeam`
     - description: creates a new team with its first user that will be an admin
@@ -205,5 +205,5 @@
     - returns: Promise
       - data: the same value that was passed in as the parameter
       - meta: `Meta`
-      - example: look at line 198 in [test file](lib/teams/teams.test.js)
+      - example: look at line 198 in [test file](./teams/teams.test.js)
     - example: `Teams.createTeam({ name: 'best team', pocName: 'NewGuy', email: 'newguy@ionchannel.io', username: 'thisguy' })`

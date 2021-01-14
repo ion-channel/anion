@@ -64,20 +64,20 @@ Both cases will yield the same result.
 
 ## API
 
-- [Auth](lib/auth/docs.md)
-- [Deliveries](lib/deliveries/docs.md)
-- [Projects](lib/projects/docs.md)
-- [Reports](lib/reports/docs.md)
-- [Rulesets](lib/rulesets/docs.md)
-- [Scanner](lib/scanner/docs.md)
-- [Searches](lib/searches/docs.md)
-- [Sessions](lib/sessions/docs.md)
-- [Tags](lib/tags/docs.md)
-- [Teams](lib/teams/docs.md)
-- [Tokens](lib/tokens/docs.md)
-- [Usage](lib/usage/docs.md)
-- [Users](lib/users/docs.md)
-- [Vulnerabilities](lib/vulnerabilities/docs.md)
+- [Auth](./lib/auth/docs.md)
+- [Deliveries](./lib/deliveries/docs.md)
+- [Projects](./lib/projects/docs.md)
+- [Reports](./lib/reports/docs.md)
+- [Rulesets](./lib/rulesets/docs.md)
+- [Scanner](./lib/scanner/docs.md)
+- [Searches](./lib/searches/docs.md)
+- [Sessions](./lib/sessions/docs.md)
+- [Tags](./lib/tags/docs.md)
+- [Teams](./lib/teams/docs.md)
+- [Tokens](./lib/tokens/docs.md)
+- [Usage](./lib/usage/docs.md)
+- [Users](./lib/users/docs.md)
+- [Vulnerabilities](./lib/vulnerabilities/docs.md)
 
 ## Suggested workflow for new users
 

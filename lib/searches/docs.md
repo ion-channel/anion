@@ -23,5 +23,5 @@
     - returns: Promise
       - data: object
         - field
-      - example: look at line 67 in [test file](lib/reports.test.js)
+      - example: look at line 67 in [test file](./reports.test.js)
     - example: `Searches.search('ruby', 'repos', 0, 2)`

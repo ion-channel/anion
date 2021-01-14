@@ -25,7 +25,7 @@
     - returns: Promise
       - data: object
         - field
-      - example: look at line 110 in [test file](lib/users/users.test.js)
+      - example: look at line 110 in [test file](./users/users.test.js)
     - example: `Users.getSelf('abc')`
 
   - `resetPassword`
@@ -83,7 +83,7 @@
         - description: the authentication token
     - returns: Promise
       - data: `User`
-      - example: look at line 127 in [test file](lib/users/users.test.js)
+      - example: look at line 127 in [test file](./users/users.test.js)
     - example: `Users.updateUser({ id: 'myuserid', password: 'mynewpassword' })`
 
   - `getUsers`
@@ -92,7 +92,7 @@
     - parameters: none
     - returns: Promise
       - data: an array of `User`
-      - example: look at line 144 in [test file](lib/users/users.test.js)
+      - example: look at line 144 in [test file](./users/users.test.js)
     - example: `Users.getUsers()`
 
   - `signupAws`

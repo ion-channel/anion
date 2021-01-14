@@ -59,7 +59,7 @@
         - description: id of the analysis
     - returns: Promise
       - `AnalysisStatus`
-      - example: look at line 127 in [test file](lib/scanner/scanner.test.js)
+      - example: look at line 127 in [test file](./scanner/scanner.test.js)
     - example: `Scanner.getAnalysisStatus({projectId: 'someproject', teamId: 'bestteam', id: 'id'})`
 
   - `getPublicAnalysisStatus`
@@ -88,7 +88,7 @@
         - description: id of the team that owns the project
     - returns: Promise
       - `AnalysisStatus`
-      - example: look at line 127 in [test file](lib/scanner/scanner.test.js)
+      - example: look at line 127 in [test file](./scanner/scanner.test.js)
     - example: `Scanner.getLatestAnalysisStatus({projectId: 'someproject', teamId: 'bestteam'})`
 
   - `analyzeProject`
@@ -103,7 +103,7 @@
         - description: id of a team that owns the project
     - returns: Promise
       - `AnalysisStatus`
-      - example: look at line 51 in [test file](lib/scanner/scanner.test.js)
+      - example: look at line 51 in [test file](./scanner/scanner.test.js)
     - example: `Scanner.analyzeProject({projectId: '8ca10aea-7448-4fba-920e-e0abab735071', teamId: 'bbd16a1b-05b5-40f8-9bc8-b3e8fcf9116c'})`
 
   - `analyzeProjects`
@@ -115,5 +115,5 @@
     - returns: Promise
       - data: object
         - field
-      - example: look at line 102 in [test file](lib/scanner/scanner.test.js)
+      - example: look at line 102 in [test file](./scanner/scanner.test.js)
     - example: `Scanner.analyzeProjects([{ project_id: '95dc4e15' }, { project_id: '9657f3fe' }])`
