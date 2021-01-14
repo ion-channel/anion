@@ -1,0 +1,27 @@
+# Auth service
+
+- methods:
+  - `clearTokens`
+    - description: Removes the autentication token from the browsers cookies
+    - parameters: none
+    - returns: undefined
+    - example: `Auth.clearTokens()`
+  - `getTokens`
+    - description: Returns the authentication token
+    - parameters: none
+    - returns: the authentication token
+    - example: `Auth.getToken()`
+  - `setToken`
+    - description: creates a new cookie for the browser
+    - parameters:
+      - token
+        - type: string
+        - description: a string that will be used internally that authenticates the user
+    - returns: undefined
+    - example: `setToken('a')`
+  - `appendHeaders`
+    - description: returns an object, possibly with a token used for authentication, to be used as the headers for an http request
+    - parameters
+      - headers, type object, optional
+    - returns: object, examples: `{}`, `{ Authorization: 'bearer a'}`
+    - examples: `Auth.appendHeaders()`, `Auth.appendHeaders({})`
