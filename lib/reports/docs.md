@@ -280,6 +280,19 @@
           - projects: list of `ProjectReport`
       - [example](./reports.test.js#L34571)
     - example: `Reports.getExportedData({ teamId: 'someid', ids: ['abc'] })`
+  - `getExportedDataCSV`
+    - description: fetches a snapshot of data around a list of projects
+      - parameter: object
+        - teamId
+          - type: string
+          - description: the id of the team that has projects
+        - ids
+          - type: an array of strings
+          - description: a list of project ids 
+      - returns: Promise
+        - object
+          - data: object
+          - projects: CSV list of project report `ProjectReport`
   - `getProjectsByDependency`
     - description: fetches the projects that have the given dependency
     - parameter: object
