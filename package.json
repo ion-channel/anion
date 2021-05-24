@@ -11,7 +11,7 @@
     "node": ">=14.15.4"
   },
   "scripts": {
-    "build": "babel --preset env lib -d build",
+    "build": "babel --presets=@babel/env lib -d build",
     "lint:watch": "esw -w lib/**"
   },
   "author": "Ion Channel Dev <dev@ionchannel.io>",
@@ -35,6 +35,7 @@
     "@babel/preset-env": "^7.12.11",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
+    "eslint-watch": "7.0.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.1",
