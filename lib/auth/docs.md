@@ -2,7 +2,7 @@
 
 - methods:
   - `clearTokens`
-    - description: Removes the autentication token from the browsers cookies
+    - description: Removes the authentication token from the browsers cookies
     - parameters: none
     - returns: undefined
     - example: `Auth.clearTokens()`
@@ -20,7 +20,7 @@
     - returns: undefined
     - example: `setToken('a')`
   - `appendHeaders`
-    - description: returns an object, possibly with a token used for authentication, to be used as the headers for an http request
+    - description: returns an object, possibly with a token used for authentication, to be used as the headers for a http request
     - parameters
       - headers, type object, optional
     - returns: object, examples: `{}`, `{ Authorization: 'bearer a'}`

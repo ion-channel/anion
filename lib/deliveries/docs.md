@@ -77,7 +77,7 @@
     - parameters:
       - id
         - type: string
-        - description: the id of the deiverly destination that you want to delete
+        - description: the id of the delivery destination that you want to delete
     - returns: Promise
       - data: object
         - data: empty string

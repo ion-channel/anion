@@ -346,7 +346,7 @@
         - type: an array of strings
         - description: each string is an id to a project
       - fields: an unlimited list of key and value pairs
-        - example: monitor is the key, and the value is false, so the intent is that you're changing the monitoring field on all of the given projects
+        - example: monitor is the key, and the value is false, so the intent is that you're changing the monitoring field on all the given projects
         - this should only have fields that are in the `Project` type
     - returns: Promise
       - data: object

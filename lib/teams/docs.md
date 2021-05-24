@@ -69,7 +69,7 @@
 
   - `acceptInvite`
 
-    - description: a new user has been invited to create an account, and they should have recieved an email with a link. The token on that link will confirm their account so they can login
+    - description: a new user has been invited to create an account, and they should have received an email with a link. The token on that link will confirm their account, so they can log in
     - parameter: object
       - id
         - type: string
@@ -113,7 +113,7 @@
         - description: email of the user
       - role
         - type: string
-        - description: access rights the user will have. Should be one of 'member', 'admin', or 'sys_admin'. System admins can see all of the teams in the system. Admins only have access to the teams they are an admin of. They can see all of the members of a team, and can add or remove team members. Members can only see themselves in a team and cannot perform any actions that an administrator would be able to.
+        - description: access rights the user will have. Should be one of 'member', 'admin', or 'sys_admin'. System admins can see all the teams in the system. Admins only have access to the teams they are an admin of. They can see all the members of a team, and can add or remove team members. Members can only see themselves in a team and cannot perform any actions that an administrator would be able to.
     - returns: Promise
       - data: `TeamUser`
       - example: [test file](./teams.test.js#L501)
@@ -121,7 +121,7 @@
 
   - `resendInvite`
 
-    - description: a user hasn't accepted an invitation, so resend them the email with a new token so they can complete registration
+    - description: a user hasn't accepted an invitation, so resend them the email with a new token, so they can complete registration
     - parameter: object
       - id
         - type: string

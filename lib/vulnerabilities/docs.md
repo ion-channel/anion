@@ -62,5 +62,5 @@
         - description: the id of the product
     - returns: Promise
       - data: `Product`
-      - example: [test file](/vulnerabilities.test.js#L172)
+      - example: [test file](./vulnerabilities.test.js#L172)
     - example: `Vulnerabilities.getProduct({ externalId: 'ruby' })`

@@ -30,7 +30,7 @@
 
   - `resetPassword`
 
-    - description: as a user that can't remember their password and they are not in an authenticated session, this will send an email to them with a link that will direct them to a page where they can change their password
+    - description: as a user that can't remember their password, and they are not in an authenticated session, this will email them with a link that will direct them to a page where they can change their password
     - parameter:
       - email
         - type: string
@@ -43,7 +43,7 @@
 
   - `completeSignup`
 
-    - description: a user has been invited, which means they should have gotten an email that has an authentication token. Now they need to create a password for their account so they can create an authenticated session
+    - description: a user has been invited, which means they should have gotten an email that has an authentication token. Now they need to create a password for their account, so they can create an authenticated session
     - parameter: object
       - username
         - type: string
@@ -71,13 +71,13 @@
         - description: the id of the user
       - email
         - type: string
-        - description: the email of the user that is intented to be changed, optional
+        - description: the email of the user that is intended to be changed, optional
       - username
         - type: string
-        - description: the username of the user that is intented to be changed, optional
+        - description: the username of the user that is intended to be changed, optional
       - password
         - type: string
-        - description: a password of a user that is intented to be changed, optional
+        - description: a password of a user that is intended to be changed, optional
       - token
         - type: string
         - description: the authentication token
@@ -97,7 +97,7 @@
 
   - `signupAws`
 
-    - description: user accounts can be created in two different ways: [Request an api key](https://ionchannel.io/contact/) or they can log into their AWS console and search for ion channel in the AWS Marketplace. By subscribing to ion channel, a user would be redirected to the ion channel consoleto create their account
+    - description: user accounts can be created in two different ways: [Request an api key](https://ionchannel.io/contact/) or they can log into their AWS console and search for ion channel in the AWS Marketplace. By subscribing to ion channel, a user would be redirected to the ion channel console to create their account
     - parameter: object
       - customer
         - type: string

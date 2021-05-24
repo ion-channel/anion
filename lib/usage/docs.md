@@ -4,7 +4,7 @@
 
   - `info`
 
-    - description: get the number of analysis a team has used in the current month and the number of analysis they have purchaged for that month
+    - description: get the number of analysis a team has used in the current month and the number of analysis they have purchased for that month
     - parameter: object
       - teamId
         - type: string

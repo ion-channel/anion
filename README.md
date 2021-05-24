@@ -34,7 +34,7 @@ Each of the following entities can be imported into a module with javascript mod
 example:
 `import { Auth } from 'anion'`
 
-A lot of the methods have a single argument as an object. This is essentialy a way in javascript to provide named arguments. As long as you provide a single argument as an object to those function calls that have the names of the keys that are required for those function calls, you can order those key-value pairs any way you want.
+A lot of the methods have a single argument as an object. This is essentially a way in javascript to provide named arguments. As long as you provide a single argument as an object to those function calls that have the names of the keys that are required for those function calls, you can order those key-value pairs any way you want.
 
 example:
 
