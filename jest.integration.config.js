@@ -16,15 +16,11 @@ module.exports = {
   collectCoverage: false,
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: [ 'test.js$' ],
+  coveragePathIgnorePatterns: ['test.js$'],
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-    '<rootDir>/**/*.test.int.js',
-  ],
+  testMatch: ['<rootDir>/**/*.test.int.js'],
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
-  modulePathIgnorePatterns: [
-    '<rootDir>/node_modules',
-  ],
+  modulePathIgnorePatterns: ['<rootDir>/node_modules'],
 }
