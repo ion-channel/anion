@@ -11,7 +11,7 @@
     "node": ">=14.15.4"
   },
   "scripts": {
-    "build": "babel --preset env lib -d build",
+    "build": "babel --presets @babel/env lib -d build",
     "lint:watch": "esw -w lib/**"
   },
   "author": "Ion Channel Dev <dev@ionchannel.io>",
