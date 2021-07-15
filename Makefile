@@ -81,3 +81,8 @@ integration_test:  ## Run integration tests
 .PHONY: publish
 publish:  ## publish to npm (you should have ran `npm version [patch, minor, major]` before this runs)
 	npm publish --access public
+
+.PHONY: publish
+publish_beta:  ## publish to npm (you should have ran `npm version [patch, minor, major]` before this runs)
+	npm publish --tag beta
+
